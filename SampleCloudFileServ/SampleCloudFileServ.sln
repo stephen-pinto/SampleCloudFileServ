@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestFileServ", "TestFileServ\TestFileServ.vcxproj", "{C73BE07C-E335-401D-9C9A-B2502B45AAFA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CloudFileServLib", "CloudFileServLib\CloudFileServLib.vcxproj", "{0EEBA658-36BE-476F-AE97-40A07A65F6DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{C73BE07C-E335-401D-9C9A-B2502B45AAFA}.Release|x64.Build.0 = Release|x64
 		{C73BE07C-E335-401D-9C9A-B2502B45AAFA}.Release|x86.ActiveCfg = Release|Win32
 		{C73BE07C-E335-401D-9C9A-B2502B45AAFA}.Release|x86.Build.0 = Release|Win32
+		{0EEBA658-36BE-476F-AE97-40A07A65F6DB}.Debug|x64.ActiveCfg = Debug|x64
+		{0EEBA658-36BE-476F-AE97-40A07A65F6DB}.Debug|x64.Build.0 = Debug|x64
+		{0EEBA658-36BE-476F-AE97-40A07A65F6DB}.Debug|x86.ActiveCfg = Debug|Win32
+		{0EEBA658-36BE-476F-AE97-40A07A65F6DB}.Debug|x86.Build.0 = Debug|Win32
+		{0EEBA658-36BE-476F-AE97-40A07A65F6DB}.Release|x64.ActiveCfg = Release|x64
+		{0EEBA658-36BE-476F-AE97-40A07A65F6DB}.Release|x64.Build.0 = Release|x64
+		{0EEBA658-36BE-476F-AE97-40A07A65F6DB}.Release|x86.ActiveCfg = Release|Win32
+		{0EEBA658-36BE-476F-AE97-40A07A65F6DB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
