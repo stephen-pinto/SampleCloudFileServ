@@ -27,6 +27,18 @@
     <ClInclude Include="include\ListBlobs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\BlobStorageProvider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StorageProvider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FileStorageProvider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IFileBasedStorageProvider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CloudFileServLib.cpp">
@@ -36,6 +48,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ListBlobs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FileStorageProvider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
