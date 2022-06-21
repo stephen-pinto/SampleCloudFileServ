@@ -129,6 +129,11 @@
   <ItemGroup>
     <ClCompile Include="TestFileServ.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CloudFileServLib\CloudFileServLib.vcxproj">
+      <Project>{0eeba658-36be-476f-ae97-40a07a65f6db}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

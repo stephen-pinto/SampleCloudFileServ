@@ -2,10 +2,15 @@
 //
 
 #include <iostream>
+#include "../CloudFileServLib/include/ListBlobs.h"
+
+using namespace CloudFileServLib::BL;
 
 int main()
 {
     std::cout << "Hello World!\n";
+    ListBlobs lb;
+    lb.ListAll();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

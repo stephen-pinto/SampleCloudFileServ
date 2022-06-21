@@ -8,6 +8,7 @@
 #define PCH_H
 
 // add headers that you want to pre-compile here
-#include "framework.h"
+#include "../include/framework.h"
+#include "../include/Common.h"
 
 #endif //PCH_H
