@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="include\BlobStorageProvider.h" />
     <ClInclude Include="include\Common.h" />
+    <ClInclude Include="include\FileProps.h" />
     <ClInclude Include="include\IFileBasedStorageProvider.h" />
     <ClInclude Include="include\FileStorageProvider.h" />
     <ClInclude Include="include\framework.h" />

@@ -39,6 +39,9 @@
     <ClInclude Include="include\IFileBasedStorageProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\FileProps.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CloudFileServLib.cpp">

@@ -7,7 +7,7 @@ namespace CloudFileServLib
 {
 	namespace BL
 	{
-		using namespace Azure::Storage::Blobs;
+		using namespace Azure::Storage::Blobs; 
 		using namespace std;
 
 		class FileStorageProvider : public IFileBasedStorageProvider
@@ -18,10 +18,9 @@ namespace CloudFileServLib
 
 			// Inherited via IFileBasedStorageProvider
 			virtual vector<string> GetFileList() override;
-			//virtual vector<string>& GetFileList2() override;
-			virtual string GetFile(string filename) override;
-			virtual FileProps GetFileProps(string fileName) override;
-			virtual void OpenContainer(string containerName) override;
+			virtual string GetFile(const string filename) override;
+			virtual FileProps& GetFileProps(const string fileName) override;
+			virtual void OpenContainer(const string containerName) override;
 
 		private:
 			const string& connectionString;
