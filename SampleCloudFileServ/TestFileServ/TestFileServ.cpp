@@ -5,6 +5,7 @@
 #include "../CloudFileServLib/include/ListBlobs.h"
 #include "TestOne.h"
 #include <crtdbg.h>
+#include <boost/program_options.hpp>
 
 using namespace CloudFileServLib::BL;
 
