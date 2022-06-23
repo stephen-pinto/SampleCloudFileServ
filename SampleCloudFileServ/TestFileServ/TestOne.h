@@ -1,16 +1,36 @@
 #pragma once
 
+//#include <windows.h>
+#include <fstream>
+#include <string>
 #include "../CloudFileServLib/include/BlobStorageProvider.h"
 
 using namespace CloudFileServLib::BL;
 using namespace std;
 
-string connectionString = "DefaultEndpointsProtocol=https;AccountName=spazteststorage;AccountKey=S4zLAOtL1jxBBkIdlIOIlnbX/t14Y3PA1U7PugREwK3yetB8wqX81DHggXATom0xKSqH4NGSo9Qv+AStwL1Kdw==;EndpointSuffix=core.windows.net";
 string containerName = "test";
+
+//string GetCurrentDir()
+//{
+//	char buffer[1024] = { 0 };
+//	GetModuleFileNameA(NULL, buffer, 1024);
+//	std::string::size_type pos = string(buffer).find_last_of("\\/");
+//	return string(buffer).substr(0, pos);
+//}
+
+string ReadConnectionStringFromFile(string fileName)
+{
+	ifstream strm;
+	string content;
+	strm.open(fileName);
+	strm >> content;
+	return content;
+}
 
 void Test1()
 {
-	//int* x = new int(500);
+	//auto dir = GetCurrentDir();
+	auto connectionString = ReadConnectionStringFromFile("ConnectionStrings.txt");
 
 	BlobStorageProvider blobProvider(connectionString);
 	blobProvider.OpenContainer("test");
@@ -31,5 +51,4 @@ void Test1()
 	}
 
 	auto props = blobProvider.GetFileProps("some");
-	/*system("PAUSE");*/	
 }
