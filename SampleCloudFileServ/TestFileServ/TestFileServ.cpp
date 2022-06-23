@@ -3,14 +3,21 @@
 
 #include <iostream>
 #include "../CloudFileServLib/include/ListBlobs.h"
+#include "TestOne.h"
 
 using namespace CloudFileServLib::BL;
 
-int main()
+void SimpleTest()
 {
     std::cout << "Hello World!\n";
     ListBlobs lb;
     lb.ListAll();
+}
+
+int main()
+{
+    Test1();
+    return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

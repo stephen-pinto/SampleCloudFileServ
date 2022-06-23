@@ -27,19 +27,19 @@
     <ClInclude Include="include\ListBlobs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\BlobStorageProvider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\StorageProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\FileStorageProvider.h">
+    <ClInclude Include="include\BlobStorageProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\IFileBasedStorageProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\FileProps.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FileStorageProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,7 +53,7 @@
     <ClCompile Include="src\ListBlobs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\FileStorageProvider.cpp">
+    <ClCompile Include="src\BlobStorageProvider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

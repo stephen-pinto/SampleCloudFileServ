@@ -1,27 +1,27 @@
 #include "pch.h"
 #include "../include/IFileBasedStorageProvider.h"
-#include "../include/FileStorageProvider.h"
+#include "../include/BlobStorageProvider.h"
 using namespace Azure::Storage::Blobs::Models;
 using namespace CloudFileServLib::BL;
 using namespace std;
 
-FileStorageProvider::FileStorageProvider(const string& connStr) : connectionString(connStr)
+BlobStorageProvider::BlobStorageProvider(const string& connStr) : connectionString(connStr)
 {
 }
 
-FileStorageProvider::~FileStorageProvider()
+BlobStorageProvider::~BlobStorageProvider()
 {	
 }
 
-void CloudFileServLib::BL::FileStorageProvider::OpenContainer(const string containerName)
+void CloudFileServLib::BL::BlobStorageProvider::OpenContainer(const string containerName)
 {
 	//Initialize the contianerClient
 	auto client = BlobContainerClient::CreateFromConnectionString(connectionString, containerName);
 	containerClient = make_unique<BlobContainerClient>(client);
-	containerClient->CreateIfNotExists();
+	//containerClient->CreateIfNotExists();
 }
 
-vector<string> CloudFileServLib::BL::FileStorageProvider::GetFileList()
+vector<string> CloudFileServLib::BL::BlobStorageProvider::GetFileList()
 {
 	if (containerClient.get() == NULL)
 		throw runtime_error("No container opened");
@@ -36,7 +36,7 @@ vector<string> CloudFileServLib::BL::FileStorageProvider::GetFileList()
 	return fileList;
 }
 
-string CloudFileServLib::BL::FileStorageProvider::GetFile(const string filename)
+string CloudFileServLib::BL::BlobStorageProvider::GetFile(const string filename)
 {
 	if (containerClient.get() == NULL)
 		throw runtime_error("No container opened");
@@ -50,7 +50,7 @@ string CloudFileServLib::BL::FileStorageProvider::GetFile(const string filename)
 	return string(blobFile.begin(), blobFile.end());
 }
 
-FileProps& CloudFileServLib::BL::FileStorageProvider::GetFileProps(const string fileName)
+FileProps CloudFileServLib::BL::BlobStorageProvider::GetFileProps(const string fileName)
 {
 	if (containerClient.get() == NULL)
 		throw runtime_error("No container opened");
