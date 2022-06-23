@@ -13,7 +13,7 @@ namespace CloudFileServLib
 		{
 			virtual vector<string> GetFileList() = 0;
 			virtual void OpenContainer(const string containerName) = 0;
-			virtual string GetFile(const string filename) = 0;
+			virtual string GetFile(const string fileName) = 0;
 			virtual FileProps GetFileProps(const string fileName) = 0;
 		};
 	}

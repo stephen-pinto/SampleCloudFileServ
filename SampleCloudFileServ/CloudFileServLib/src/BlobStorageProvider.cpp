@@ -10,15 +10,15 @@ BlobStorageProvider::BlobStorageProvider(const string& connStr) : connectionStri
 }
 
 BlobStorageProvider::~BlobStorageProvider()
-{	
+{
+	containerClient.release();
 }
 
 void CloudFileServLib::BL::BlobStorageProvider::OpenContainer(const string containerName)
 {
 	//Initialize the contianerClient
 	auto client = BlobContainerClient::CreateFromConnectionString(connectionString, containerName);
-	containerClient = make_unique<BlobContainerClient>(client);
-	//containerClient->CreateIfNotExists();
+	containerClient = make_unique<BlobContainerClient>(client);	
 }
 
 vector<string> CloudFileServLib::BL::BlobStorageProvider::GetFileList()
@@ -36,12 +36,12 @@ vector<string> CloudFileServLib::BL::BlobStorageProvider::GetFileList()
 	return fileList;
 }
 
-string CloudFileServLib::BL::BlobStorageProvider::GetFile(const string filename)
+string CloudFileServLib::BL::BlobStorageProvider::GetFile(const string fileName)
 {
 	if (containerClient.get() == NULL)
 		throw runtime_error("No container opened");
 
-	auto blobClient = containerClient->GetBlockBlobClient(filename);
+	auto blobClient = containerClient->GetBlockBlobClient(fileName);
 	auto props = blobClient.GetProperties().Value;
 	
 	vector<uint8_t> blobFile(props.BlobSize);
@@ -56,17 +56,22 @@ FileProps CloudFileServLib::BL::BlobStorageProvider::GetFileProps(const string f
 		throw runtime_error("No container opened");
 	
 	FileProps fp;
-	
-	auto blobPage = containerClient->ListBlobs();
-	for (BlobItem blob : blobPage.Blobs)
+	BlobProperties props;
+	try
 	{
-		if (blob.Name == fileName && !blob.IsDeleted)
-		{
-			fp.SetPresence(true);
-			fp.FileName = blob.Name;
-			fp.FileType = blob.BlobType.ToString();
-			fp.FileSize = blob.BlobSize;
-		}
+		auto blobClient = containerClient->GetBlockBlobClient(fileName);
+		props = blobClient.GetProperties().Value;
 	}
+	catch (Azure::Storage::StorageException e)
+	{
+		if (e.StatusCode == Azure::Core::Http::HttpStatusCode::NotFound)
+			return fp;		
+	}
+
+	fp.SetPresence(true);
+	fp.FileName = fileName;
+	fp.FileType = props.BlobType.ToString();
+	fp.FileSize = props.BlobSize;
+	
 	return fp;
 }

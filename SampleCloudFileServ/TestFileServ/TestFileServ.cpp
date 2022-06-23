@@ -4,6 +4,7 @@
 #include <iostream>
 #include "../CloudFileServLib/include/ListBlobs.h"
 #include "TestOne.h"
+#include <crtdbg.h>
 
 using namespace CloudFileServLib::BL;
 
@@ -16,7 +17,9 @@ void SimpleTest()
 
 int main()
 {
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     Test1();
+    _CrtDumpMemoryLeaks();
     return 0;
 }
 

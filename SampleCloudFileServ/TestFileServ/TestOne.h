@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../CloudFileServLib/include/BlobStorageProvider.h"
+
 using namespace CloudFileServLib::BL;
 using namespace std;
 
@@ -9,6 +10,8 @@ string containerName = "test";
 
 void Test1()
 {
+	//int* x = new int(500);
+
 	BlobStorageProvider blobProvider(connectionString);
 	blobProvider.OpenContainer("test");
 
@@ -26,4 +29,7 @@ void Test1()
 		auto props = blobProvider.GetFileProps(fn);
 		cout << props.FileName << " --- " << props.FileSize << " --- " << props.FileType << endl;
 	}
+
+	auto props = blobProvider.GetFileProps("some");
+	/*system("PAUSE");*/	
 }

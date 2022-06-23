@@ -18,7 +18,7 @@ namespace CloudFileServLib
 
 			// Inherited via IFileBasedStorageProvider
 			virtual vector<string> GetFileList() override;
-			virtual string GetFile(const string filename) override;
+			virtual string GetFile(const string fileName) override;
 			virtual FileProps GetFileProps(const string fileName) override;
 			virtual void OpenContainer(const string containerName) override;
 
