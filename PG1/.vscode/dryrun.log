@@ -1,0 +1,5 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory `/Users/stephen/Workspace/cpp/Projects/SampleCloudFileServ/PG1'
+g++-11 -Wall src/cmd_line_provider.cpp src/main.cpp -Isrc -o bin/app.out 
+make: Leaving directory `/Users/stephen/Workspace/cpp/Projects/SampleCloudFileServ/PG1'
+ 
