@@ -2,6 +2,7 @@
 #define __CRYPTO_HELPER_H__
 
 #include <string>
+#include "salt_generator.hpp"
 
 namespace cmd_tool
 {
