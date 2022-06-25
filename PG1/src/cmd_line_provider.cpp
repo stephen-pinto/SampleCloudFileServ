@@ -79,6 +79,10 @@ int cmd_line_provider::handle_binary_command(std::vector<std::string> params)
     {
         cout << "Removed file " << params.back() << endl;
     }
+    else if(params.front() == "cp")
+    {
+        cout << "Copied file" << params.back() << endl;
+    }
 
     return 0;
 }
