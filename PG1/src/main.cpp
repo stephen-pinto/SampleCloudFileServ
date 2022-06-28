@@ -10,8 +10,8 @@ int main()
     std::cout << "Hello crypto world" << std::endl;
     
     salt_generator gen;
-    auto piv = gen.generate_iv(32);
-    auto encr_iv = gen.generate_iv(32);
+    auto piv = gen.generate_iv(AES::IV_LENGTH);
+    auto encr_iv = gen.generate_iv(AES::BLOCKSIZE);
     
     crypto_helper ch;
     auto key = ch.generate_key("SamplePass", piv);

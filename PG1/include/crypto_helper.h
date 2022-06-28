@@ -15,7 +15,7 @@ namespace cmd_tool
     public:
         string encrypt(const SecByteBlock& key, const SecByteBlock& iv, const string data);
         string decrypt(const SecByteBlock& key, const SecByteBlock& iv, const string encr_data);
-        SecByteBlock generate_key(const string &password, SecByteBlock salt);
+        SecByteBlock generate_key(const string &password, const SecByteBlock& salt);
 
     private:
 
