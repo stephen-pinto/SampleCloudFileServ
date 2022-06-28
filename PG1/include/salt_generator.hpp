@@ -2,6 +2,7 @@
 #define __SALT_GENERATOR_H__
 
 #include <string>
+#include <gcrypt.h>
 
 namespace cmd_tool
 {
@@ -14,6 +15,14 @@ namespace cmd_tool
     };
 }
 
+std::string cmd_tool::salt_generator::generate_salt(size_t len_in_bytes)
+{
+    auto salt_c = gcry_random_bytes(len_in_bytes, GCRY_STRONG_RANDOM);
+    std::string salt((char*)salt_c);
+    return salt;
+}
+
+/*
 std::string cmd_tool::salt_generator::generate_salt(size_t len_in_bytes)
 {
     static const char alphanum[] =
@@ -29,5 +38,6 @@ std::string cmd_tool::salt_generator::generate_salt(size_t len_in_bytes)
     
     return str;
 }
+*/
 
 #endif // __SALT_GENERATOR_H__
