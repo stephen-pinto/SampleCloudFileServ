@@ -3,6 +3,7 @@
 
 #include <string>
 #include "salt_generator.hpp"
+typedef vector<CryptoPP::byte> key_t;
 
 namespace cmd_tool
 {
@@ -10,12 +11,12 @@ namespace cmd_tool
     class crypto_helper
     {
     public:
-        wstring encrypt(string data, string key);
-        string  decrypt(wstring encr_data, string key);
-        string  generate_hash(string password, string salt);
-        vector<CryptoPP::byte> generate_key(const string &password, SecByteBlock salt);
+        wstring encrypt(key_t key, string data);
+        string  decrypt(key_t key, wstring encr_data);
+        key_t generate_key(const string &password, SecByteBlock salt);
 
     private:
+
     };
 }
 
