@@ -11,11 +11,11 @@ namespace cmd_tool
     {
     public:
         wstring encrypt(string data, string key);
-        string decrypt(wstring encr_data, string key);
-        string generate_hash(string password, string salt);
+        string  decrypt(wstring encr_data, string key);
+        string  generate_hash(string password, string salt);
 
     private:
-
+        
     };
 }
 

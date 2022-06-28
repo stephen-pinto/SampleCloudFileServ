@@ -1,11 +1,15 @@
 OBJ = bin/app.out
-CC = g++-11
-INCLUDE = -I"../../../../libs/boost_1_79_0" -I"../../../../libs/libgcrypt-1.10.1/build/include" -I"../../../../libs/libgpg-error-1.45/build/include"
-LIB =
+##CC = g++-11
+#For now cant use latest compiler for crypto++ so using default clang from mac
+CC = g++
+CFLAGS = -std=c++11
+INCLUDE = -I"../../../../libs/boost_1_79_0" -I"../../../../libs/cryptopp860/build" 
+LIB = -L"../../../../libs/cryptopp860/build/lib"
+LIBFILES = -lcryptopp
 SRCS = $(wildcard src/*.cpp)
 
 app:
-	${CC} -Wall ${SRCS} ${INCLUDE} -o ${OBJ} ${LIB}
+	${CC} -Wall ${SRCS} ${CFLAGS} ${INCLUDE} ${LIB} ${LIBFILES} -o ${OBJ}
 
 clean:
 	-rm -f bin/*

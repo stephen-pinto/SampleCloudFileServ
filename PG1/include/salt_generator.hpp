@@ -2,7 +2,13 @@
 #define __SALT_GENERATOR_H__
 
 #include <string>
-#include <gcrypt.h>
+#include <include/cryptopp/cryptlib.h>
+#include <include/cryptopp/osrng.h>
+#include <include/cryptopp/modes.h>
+#include <include/cryptopp/files.h>
+#include <include/cryptopp/hex.h>
+
+using namespace CryptoPP;
 
 namespace cmd_tool
 {
@@ -17,9 +23,15 @@ namespace cmd_tool
 
 std::string cmd_tool::salt_generator::generate_salt(size_t len_in_bytes)
 {
-    auto salt_c = gcry_random_bytes(len_in_bytes, GCRY_STRONG_RANDOM);
-    std::string salt((char*)salt_c);
-    return salt;
+    AutoSeededRandomPool prng;
+    string hexKey;
+    HexEncoder hexencoder(new StringSink(hexKey));
+    //SecByteBlock key(AES::DEFAULT_KEYLENGTH);
+    //prng.GenerateBlock(key, key.size());
+    SecByteBlock iv(AES::BLOCKSIZE);    
+    prng.GenerateBlock(iv, iv.size());
+    hexencoder.Put(iv, iv.size());
+    return hexKey;
 }
 
 /*
