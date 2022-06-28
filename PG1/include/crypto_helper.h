@@ -13,9 +13,9 @@ namespace cmd_tool
         wstring encrypt(string data, string key);
         string  decrypt(wstring encr_data, string key);
         string  generate_hash(string password, string salt);
+        vector<CryptoPP::byte> generate_key(const string &password, SecByteBlock salt);
 
     private:
-        
     };
 }
 
