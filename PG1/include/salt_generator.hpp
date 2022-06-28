@@ -24,12 +24,12 @@ namespace cmd_tool
 std::string cmd_tool::salt_generator::generate_salt(size_t len_in_bytes)
 {
     AutoSeededRandomPool prng;
-    string hexKey;
-    HexEncoder hexencoder(new StringSink(hexKey));
+    string hex_key;
+    HexEncoder hexencoder(new StringSink(hex_key));
     SecByteBlock iv(len_in_bytes);
     prng.GenerateBlock(iv, iv.size());
     hexencoder.Put(iv, iv.size());
-    return hexKey;
+    return hex_key;
 }
 
 CryptoPP::SecByteBlock cmd_tool::salt_generator::generate_iv(size_t len_in_bytes)
@@ -37,7 +37,6 @@ CryptoPP::SecByteBlock cmd_tool::salt_generator::generate_iv(size_t len_in_bytes
     AutoSeededRandomPool prng;
     string hexKey;
     SecByteBlock iv(len_in_bytes);
-    std::cout << "IV length: " << iv.SizeInBytes() * 8 << std::endl;
     prng.GenerateBlock(iv, iv.size());
     return iv;
 }

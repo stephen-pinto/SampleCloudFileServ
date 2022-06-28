@@ -5,6 +5,7 @@
 #include <include/cryptopp/cryptlib.h>
 #include <include/cryptopp/modes.h>
 #include <include/cryptopp/osrng.h>
+#include <include/cryptopp/eax.h>
 
 using namespace cmd_tool;
 using namespace std;
@@ -27,10 +28,10 @@ string crypto_helper::encrypt(const SecByteBlock& key, const SecByteBlock& iv, c
 
     try
     {
-        //Encrypt the content using AES256 algorithm
-        CBC_Mode<AES>::Encryption encr;
+        //Encrypt the content using AES algorithm
+        EAX<AES>::Encryption encr;
         encr.SetKeyWithIV(key, key.size(), iv);
-        StringSource str(data, true, new StreamTransformationFilter(encr, new StringSink(encr_text)));
+        StringSource str(data, true, new AuthenticatedEncryptionFilter(encr, new StringSink(encr_text)));
     }
     catch(const Exception& e)
     {
@@ -47,10 +48,10 @@ string crypto_helper::decrypt(const SecByteBlock& key, const SecByteBlock& iv, s
 
     try
     {
-        //Decrypt the content using AES256 algorithm
-        CBC_Mode<AES>::Decryption decr;
+        //Decrypt the content using AES algorithm
+        EAX<AES>::Decryption decr;
         decr.SetKeyWithIV(key, key.size(), iv);
-        StringSource str(encr_data, true, new StreamTransformationFilter(decr, new StringSink(act_text)));
+        StringSource str(encr_data, true, new AuthenticatedDecryptionFilter(decr, new StringSink(act_text)));
     }
     catch(const Exception& e)
     {
