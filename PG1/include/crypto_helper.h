@@ -2,8 +2,10 @@
 #define __CRYPTO_HELPER_H__
 
 #include <string>
+#include <vector>
 #include "salt_generator.hpp"
-typedef vector<CryptoPP::byte> key_t;
+
+//typedef std::vector<CryptoPP::byte> key_t;
 
 namespace cmd_tool
 {
@@ -11,9 +13,9 @@ namespace cmd_tool
     class crypto_helper
     {
     public:
-        wstring encrypt(key_t key, string data);
-        string  decrypt(key_t key, wstring encr_data);
-        key_t generate_key(const string &password, SecByteBlock salt);
+        string encrypt(const SecByteBlock& key, const SecByteBlock& iv, const string data);
+        string decrypt(const SecByteBlock& key, const SecByteBlock& iv, const string encr_data);
+        SecByteBlock generate_key(const string &password, SecByteBlock salt);
 
     private:
 

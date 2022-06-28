@@ -7,18 +7,18 @@ using namespace cmd_tool;
 
 int main()
 {
-    std::cout << "Hello world" << std::endl;
-    //cmd_line_provider provider;
-    //provider.run(0, NULL);
+    std::cout << "Hello crypto world" << std::endl;
     
     salt_generator gen;
-    auto salt = gen.generate_salt(32);
-    auto iv = gen.generate_iv(32);
-    // std::cout << "Hex hash: " << salt << std::endl;
-
+    auto piv = gen.generate_iv(32);
+    auto encr_iv = gen.generate_iv(32);
+    
     crypto_helper ch;
-    ch.generate_key("SamplePass", iv);
-    ch.generate_key("SamplePass", iv);
+    auto key = ch.generate_key("SamplePass", piv);
+    auto cipher = ch.encrypt(key, encr_iv, "This is an ecrypted data content");
+    std::cout << "Cipher:\n" << cipher << std::endl;
+    auto plain = ch.decrypt(key, encr_iv, cipher);
+    std::cout << "Actual:\n" << plain << std::endl;
 
     return 0;
 }
