@@ -37,6 +37,7 @@ CryptoPP::SecByteBlock cmd_tool::salt_generator::generate_iv(size_t len_in_bytes
     AutoSeededRandomPool prng;
     string hexKey;
     SecByteBlock iv(len_in_bytes);
+    std::cout << "IV length: " << iv.SizeInBytes() * 8 << std::endl;
     prng.GenerateBlock(iv, iv.size());
     return iv;
 }
