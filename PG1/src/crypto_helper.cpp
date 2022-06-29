@@ -6,6 +6,7 @@
 #include <include/cryptopp/modes.h>
 #include <include/cryptopp/osrng.h>
 #include <include/cryptopp/eax.h>
+#include <include/cryptopp/base64.h>
 
 using namespace cmd_tool;
 using namespace std;
@@ -35,7 +36,7 @@ string crypto_helper::encrypt(const SecByteBlock& key, const SecByteBlock& iv, c
     }
     catch(const Exception& e)
     {
-        std::cerr << e.what() << '\n';
+        cerr << e.what() << '\n';
         throw e;
     }
 
@@ -60,4 +61,16 @@ string crypto_helper::decrypt(const SecByteBlock& key, const SecByteBlock& iv, s
     }
 
     return act_text;
+}
+
+string crypto_helper::gen_checksum(const string content)
+{
+    string hash;
+    SHA256 sha256;
+    StringSource ssrc(content, true,
+                      new HashFilter(sha256,
+                                     new Base64Encoder(
+                                         new StringSink(hash))));
+
+    return hash;
 }
