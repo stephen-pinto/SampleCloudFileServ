@@ -18,9 +18,13 @@ namespace cmd_tool
     public:
         inline string generate_salt(size_t len_in_bytes);
         inline SecByteBlock generate_iv(size_t len_in_bytes);
+        inline string generate_random_str(size_t len_in_bytes);
     };
 }
 
+/*
+Below function generates a random salt based on random data generated using AutoSeededRandomPool.
+*/
 std::string cmd_tool::salt_generator::generate_salt(size_t len_in_bytes)
 {
     AutoSeededRandomPool prng;
@@ -32,17 +36,22 @@ std::string cmd_tool::salt_generator::generate_salt(size_t len_in_bytes)
     return hex_key;
 }
 
+/*
+Below function generates a random IV based on random data generated using AutoSeededRandomPool.
+*/
 CryptoPP::SecByteBlock cmd_tool::salt_generator::generate_iv(size_t len_in_bytes)
 {
-    AutoSeededRandomPool prng;
+    AutoSeededRandomPool rndpool;
     string hexKey;
     SecByteBlock iv(len_in_bytes);
-    prng.GenerateBlock(iv, iv.size());
+    rndpool.GenerateBlock(iv, iv.size());
     return iv;
 }
 
 /*
-std::string cmd_tool::salt_generator::generate_salt(size_t len_in_bytes)
+Below function generates a random string based on random data generated from pool of characters.
+*/
+std::string cmd_tool::salt_generator::generate_random_str(size_t len_in_bytes)
 {
     static const char alphanum[] =
         "0123456789"
@@ -57,6 +66,5 @@ std::string cmd_tool::salt_generator::generate_salt(size_t len_in_bytes)
     
     return str;
 }
-*/
 
 #endif // __SALT_GENERATOR_H__
