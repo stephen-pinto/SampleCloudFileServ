@@ -42,7 +42,7 @@ namespace cmd_tool
         file_chunker(size_t chunk_size);
         ~file_chunker();
         void open_file(string file_path);
-        string read_next_chunk();
+        vector<byte> read_next_chunk();
         bool has_more();
         void close();
 

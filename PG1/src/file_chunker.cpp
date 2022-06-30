@@ -29,7 +29,7 @@ void file_chunker::open_file(string file_path)
     _PRINT("File size: " << state.total_bytes);
 }
 
-string file_chunker::read_next_chunk()
+vector<byte> file_chunker::read_next_chunk()
 {
     _PRINT("file_chunker entered read_next_chunk()");
     char buff[chunk_size];
@@ -46,9 +46,11 @@ string file_chunker::read_next_chunk()
         _PRINT("file_chunker reading chunk");
     }
 
+    vector<byte> vc(buff, buff + state.last_chunk_size);
+    _PRINT("Vector : " << vc.size() << " bytes");
     _PRINT("file_chunker read : " << state.last_chunk_size << " bytes");
 
-    return string(buff);
+    return vc;
 }
 
 bool file_chunker::has_more()

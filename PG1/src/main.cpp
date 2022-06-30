@@ -50,22 +50,24 @@ void TestTwo()
 void TestThree()
 {
     file_chunker fc(100000);
-    std::string full_file = "";
+    //std::string full_file = "";
     fc.open_file("/Users/stephen/Workspace/cpp/Projects/TestData/small.txt");
     int chunk_set = 1;
-    while(fc.has_more())
+    std::vector<byte> one_vec;
+    while (fc.has_more())
     {
         _PRINT("Printing chunk : " << chunk_set);
         _PRINT("\n");
         auto chunk = fc.read_next_chunk();
-        _PRINT(chunk.length());
-        full_file += chunk;
+        one_vec.insert(one_vec.end(), chunk.begin(), chunk.end());
+        //_PRINT(chunk.length());
+        //full_file += chunk;
         _PRINT("\n");
         chunk_set++;
     }
     
     _PRINT("Nothing more to read");
-    
+    std::string full_file(one_vec.begin(), one_vec.end());
     _PRINT(full_file.length());
     _PRINT(full_file);
 
