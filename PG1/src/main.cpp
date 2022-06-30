@@ -2,6 +2,7 @@
 //#include "../include/cmd_line_provider.h"
 //#include "../include/salt_generator.hpp"
 #include "../include/crypto_helper.h"
+#include "../include/file_chunker.h"
 #include <fstream>
 #include <string>
 
@@ -46,9 +47,35 @@ void TestTwo()
               << plain.length() << std::endl;
 }
 
+void TestThree()
+{
+    file_chunker fc(100000);
+    std::string full_file = "";
+    fc.open_file("/Users/stephen/Workspace/cpp/Projects/TestData/small.txt");
+    int chunk_set = 1;
+    while(fc.has_more())
+    {
+        _PRINT("Printing chunk : " << chunk_set);
+        _PRINT("\n");
+        auto chunk = fc.read_next_chunk();
+        _PRINT(chunk.length());
+        full_file += chunk;
+        _PRINT("\n");
+        chunk_set++;
+    }
+    
+    _PRINT("Nothing more to read");
+    
+    _PRINT(full_file.length());
+    _PRINT(full_file);
+
+    std::cout << "File closed" << std::endl;
+}
+
 int main()
 {
     std::cout << "Hello crypto world" << std::endl;
-    TestTwo();
+    //TestTwo();
+    TestThree();
     return 0;
 }
