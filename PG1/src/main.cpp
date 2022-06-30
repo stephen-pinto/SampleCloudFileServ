@@ -3,6 +3,7 @@
 //#include "../include/salt_generator.hpp"
 #include "../include/crypto_helper.h"
 #include "../include/file_chunker.h"
+#include "../include/file_change_checker.h"
 #include <fstream>
 #include <string>
 
@@ -73,10 +74,17 @@ void TestThree()
     std::cout << "File closed" << std::endl;
 }
 
+void TestFour()
+{
+    file_change_checker fcc;
+    fcc.check_changes("/Users/stephen/Workspace/cpp/Projects/TestData");
+}
+
 int main()
 {
     std::cout << "Hello crypto world" << std::endl;
     //TestTwo();
-    TestThree();
+    //TestThree();
+    TestFour();
     return 0;
 }

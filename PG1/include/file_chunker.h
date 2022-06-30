@@ -44,9 +44,9 @@ namespace cmd_tool
     class file_chunker
     {
     public:
-        file_chunker(size_t chunk_size);
+        file_chunker(const size_t chunk_size);
         ~file_chunker();
-        void open_file(string file_path);
+        void open_file(const string file_path);
         vector<byte> read_next_chunk();
         bool has_more();
         void close();

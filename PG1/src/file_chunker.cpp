@@ -3,7 +3,7 @@
 using namespace std;
 using namespace cmd_tool;
 
-file_chunker::file_chunker(size_t chunk_size) : chunk_size(chunk_size)
+file_chunker::file_chunker(const size_t chunk_size) : chunk_size(chunk_size)
 {
 }
     
@@ -12,7 +12,7 @@ file_chunker::~file_chunker()
     close();
 }
 
-void file_chunker::open_file(string file_path)
+void file_chunker::open_file(const string file_path)
 {
     //Open a file in binary mode to the EOF
     state.stream = new ifstream(file_path, ios::ate | ios::binary);    
