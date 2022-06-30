@@ -50,7 +50,7 @@ string crypto_helper::decrypt(const SecByteBlock& key, const SecByteBlock& iv, s
     try
     {
         //Decrypt the content using AES algorithm
-        //We could use CBC but we chose a more secure EAX
+        //We could also use CBC but we chose a more secure EAX
         EAX<AES>::Decryption decr;
         decr.SetKeyWithIV(key, key.size(), iv);
         StringSource str(encr_data, true, new AuthenticatedDecryptionFilter(decr, new StringSink(act_text)));

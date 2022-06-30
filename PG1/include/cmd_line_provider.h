@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "../include/common.h"
 
 namespace cmd_tool
 {

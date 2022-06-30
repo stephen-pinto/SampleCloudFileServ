@@ -59,6 +59,7 @@ void TestThree()
         _PRINT("Printing chunk : " << chunk_set);
         _PRINT("\n");
         auto chunk = fc.read_next_chunk();
+        _PRINT("Chunk content size: " << chunk.size());
         one_vec.insert(one_vec.end(), chunk.begin(), chunk.end());
         _PRINT("\n");
         chunk_set++;
