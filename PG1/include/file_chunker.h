@@ -27,8 +27,13 @@ namespace cmd_tool
 
         void close()
         {
+            //Close the stream
             if(stream != NULL)
+            {
+                stream->close();
                 delete (stream);
+            }
+            //Clear all the flags
             total_bytes = 0;
             total_chunks_obtained = 0;
             last_chunk_size = 0;

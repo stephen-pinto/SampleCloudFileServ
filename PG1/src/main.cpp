@@ -60,8 +60,6 @@ void TestThree()
         _PRINT("\n");
         auto chunk = fc.read_next_chunk();
         one_vec.insert(one_vec.end(), chunk.begin(), chunk.end());
-        //_PRINT(chunk.length());
-        //full_file += chunk;
         _PRINT("\n");
         chunk_set++;
     }

@@ -15,8 +15,7 @@ file_chunker::~file_chunker()
 void file_chunker::open_file(string file_path)
 {
     //Open a file in binary mode to the EOF
-    state.stream = new ifstream(file_path, ios::ate | ios::binary);
-    
+    state.stream = new ifstream(file_path, ios::ate | ios::binary);    
     if(!*state.stream)
         throw runtime_error("Could not open file");
     
@@ -31,25 +30,17 @@ void file_chunker::open_file(string file_path)
 
 vector<byte> file_chunker::read_next_chunk()
 {
-    _PRINT("file_chunker entered read_next_chunk()");
     char buff[chunk_size];
     if(!state.stream->eof())
     {
-        _PRINT("file_chunker reading chunk");
         //if we are not at the end of file then read next chunk
         state.stream->read(buff, chunk_size);
         state.total_chunks_obtained += chunk_size;
         state.last_chunk_size = state.stream->gcount();
     }
-    else
-    {
-        _PRINT("file_chunker reading chunk");
-    }
 
+    //Prepare a byte vector
     vector<byte> vc(buff, buff + state.last_chunk_size);
-    _PRINT("Vector : " << vc.size() << " bytes");
-    _PRINT("file_chunker read : " << state.last_chunk_size << " bytes");
-
     return vc;
 }
 
