@@ -6,11 +6,10 @@ namespace CloudFileServLib
 {
 	namespace BL
 	{
-		using namespace std;
 		class FileStoreStateInfo
 		{
 		public:
-			vector<FileProps> Files;
+			std::vector<FileProps> Files;
 		};
 	}
 }

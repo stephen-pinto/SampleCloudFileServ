@@ -8,13 +8,12 @@ namespace CloudFileServLib
 {
 	namespace BL
 	{
-		using namespace std;
 		class IFileBasedStorageProvider
 		{
-			virtual vector<string> GetFileList() = 0;
-			virtual void OpenContainer(const string containerName) = 0;
-			virtual string GetFile(const string fileName) = 0;
-			virtual FileProps GetFileProps(const string fileName) = 0;
+			virtual std::vector<std::string> GetFileList() = 0;
+			virtual void OpenContainer(const std::string containerName) = 0;
+			virtual std::string GetFile(const std::string fileName) = 0;
+			virtual FileProps GetFileProps(const std::string fileName) = 0;
 		};
 	}
 }

@@ -6,13 +6,12 @@ namespace CloudFileServLib
 {
 	namespace BL
 	{
-		using namespace std;
 		struct FileProps
 		{
-			string FileName;			
-			string FileType;
+			std::string FileName;
+			std::string FileType;
 			file_size_t ActualSize;
-			vector<string> Checksums;
+			std::vector<std::string> Checksums;
 			time_t LastSync;
 
 			inline bool Exists()

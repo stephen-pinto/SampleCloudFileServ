@@ -11,23 +11,21 @@ namespace CloudFileServLib
 {
 	namespace BL
 	{
-		using namespace std;
-		
 		class SaltGenerator
 		{
 		public:
-			inline string GenerateSalt(size_t lenBytes);
+			inline std::string GenerateSalt(size_t lenBytes);
 			inline CryptoPP::SecByteBlock GenerateIV(size_t lenBytes);
-			inline string GenerateRandomString(size_t lenBytes);
+			inline std::string GenerateRandomString(size_t lenBytes);
 		};
 
 		/*
 		Below function generates a random salt based on random data generated using AutoSeededRandomPool.
 		*/
-		string SaltGenerator::GenerateSalt(size_t lenBytes)
+		std::string SaltGenerator::GenerateSalt(size_t lenBytes)
 		{
 			CryptoPP::AutoSeededRandomPool prng;
-			string hexKey;
+			std::string hexKey;
 			CryptoPP::HexEncoder hexencoder(new CryptoPP::StringSink(hexKey));
 			CryptoPP::SecByteBlock iv(lenBytes);
 			prng.GenerateBlock(iv, iv.size());
@@ -41,7 +39,7 @@ namespace CloudFileServLib
 		CryptoPP::SecByteBlock SaltGenerator::GenerateIV(size_t lenBytes)
 		{
 			CryptoPP::AutoSeededRandomPool rndpool;
-			string hexKey;
+			std::string hexKey;
 			CryptoPP::SecByteBlock iv(lenBytes);
 			rndpool.GenerateBlock(iv, iv.size());
 			return iv;

@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\FileChangeChecker.h" />
     <ClInclude Include="include\CryptoHelper.h" />
     <ClInclude Include="include\FileChunkerState.h" />
     <ClInclude Include="include\FileChunker.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="include\ListBlobs.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\FileChangeChecker.cpp" />
     <ClCompile Include="src\CryptoHelper.cpp" />
     <ClCompile Include="src\FileChunkerState.cpp" />
     <ClCompile Include="src\FileChunker.cpp" />

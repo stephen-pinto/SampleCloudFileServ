@@ -8,6 +8,7 @@
 
 using namespace CloudFileServLib::BL;
 using namespace CryptoPP;
+using namespace std;
 
 //TODO: Make it more larger as per performance
 #define PBKDF2_ITERATIONS 1024
