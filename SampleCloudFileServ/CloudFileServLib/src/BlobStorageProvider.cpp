@@ -71,7 +71,7 @@ FileProps CloudFileServLib::BL::BlobStorageProvider::GetFileProps(const string f
 	fp.SetPresence(true);
 	fp.FileName = fileName;
 	fp.FileType = props.BlobType.ToString();
-	fp.FileSize = props.BlobSize;
+	fp.ActualSize = props.BlobSize;
 	
 	return fp;
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "Common.h"
+#include <ctime>
 
 namespace CloudFileServLib
 {
@@ -8,9 +9,11 @@ namespace CloudFileServLib
 		using namespace std;
 		struct FileProps
 		{
-			string FileName;
+			string FileName;			
 			string FileType;
-			int64_t FileSize;
+			file_size_t ActualSize;
+			vector<string> Checksums;
+			time_t LastSync;
 
 			inline bool Exists()
 			{

@@ -143,9 +143,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\FileChunkerState.h" />
+    <ClInclude Include="include\FileChunker.h" />
+    <ClInclude Include="include\CommandLineProvider.h" />
     <ClInclude Include="include\Common.h" />
     <ClInclude Include="include\FileProps.h" />
     <ClInclude Include="include\FileStorageProvider.h" />
+    <ClInclude Include="include\FileStoreStateInfo.h" />
     <ClInclude Include="include\IFileBasedStorageProvider.h" />
     <ClInclude Include="include\BlobStorageProvider.h" />
     <ClInclude Include="include\framework.h" />
@@ -154,6 +158,9 @@
     <ClInclude Include="include\ListBlobs.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\FileChunkerState.cpp" />
+    <ClCompile Include="src\FileChunker.cpp" />
+    <ClCompile Include="src\CommandLineProvider.cpp" />
     <ClCompile Include="src\BlobStorageProvider.cpp" />
     <ClCompile Include="src\CloudFileServLib.cpp" />
     <ClCompile Include="src\ListBlobs.cpp" />

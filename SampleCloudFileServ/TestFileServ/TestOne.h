@@ -47,7 +47,7 @@ void Test1()
 	for (auto fn : fileList)
 	{
 		auto props = blobProvider.GetFileProps(fn);
-		cout << props.FileName << " --- " << props.FileSize << " --- " << props.FileType << endl;
+		cout << props.FileName << " --- " << props.ActualSize << " --- " << props.FileType << endl;
 	}
 
 	auto props = blobProvider.GetFileProps("some");

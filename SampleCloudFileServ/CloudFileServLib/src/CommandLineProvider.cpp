@@ -8,7 +8,7 @@ using namespace boost;
 
 string binaryCmds[] = { "rm", "cp" };
 
-int Run(int argc, char** argv)
+int CommandLineProvider::Run(int argc, char** argv)
 {
     string input;
 
@@ -34,7 +34,7 @@ int Run(int argc, char** argv)
     return 0;
 }
 
-int HandleCommand(string command)
+int CommandLineProvider::HandleCommand(string command)
 {
     vector<string> cmdParams;
 
@@ -73,7 +73,7 @@ int HandleCommand(string command)
     return 0;
 }
 
-int HandleBinaryCommand(std::vector<std::string> params)
+int CommandLineProvider::HandleBinaryCommand(std::vector<std::string> params)
 {
     if (params.front() == "rm")
     {
