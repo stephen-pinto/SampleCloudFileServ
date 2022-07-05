@@ -23,6 +23,9 @@
     <ClInclude Include="TestOne.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TestTwo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ConnectionStrings.txt" />

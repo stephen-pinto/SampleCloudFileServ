@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\CryptoHelper.h" />
     <ClInclude Include="include\FileChunkerState.h" />
     <ClInclude Include="include\FileChunker.h" />
     <ClInclude Include="include\CommandLineProvider.h" />
@@ -153,11 +154,13 @@
     <ClInclude Include="include\IFileBasedStorageProvider.h" />
     <ClInclude Include="include\BlobStorageProvider.h" />
     <ClInclude Include="include\framework.h" />
+    <ClInclude Include="include\SaltGenerator.hpp" />
     <ClInclude Include="include\StorageProvider.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="include\ListBlobs.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\CryptoHelper.cpp" />
     <ClCompile Include="src\FileChunkerState.cpp" />
     <ClCompile Include="src\FileChunker.cpp" />
     <ClCompile Include="src\CommandLineProvider.cpp" />
