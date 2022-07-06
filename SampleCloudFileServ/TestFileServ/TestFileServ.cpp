@@ -21,7 +21,7 @@ int main()
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     //Test1();
-    TestTwo_1();
+    TestTwo_2();
     _CrtDumpMemoryLeaks();
     return 0;
 }

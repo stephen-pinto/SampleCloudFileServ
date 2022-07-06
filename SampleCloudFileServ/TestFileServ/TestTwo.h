@@ -2,6 +2,7 @@
 
 #include "../CloudFileServLib/include/CryptoHelper.h"
 #include "../CloudFileServLib/include/SaltGenerator.hpp"
+#include "../CloudFileServLib/include/FileChangeChecker.h"
 
 #define KEY_SIZE 32
 
@@ -20,4 +21,10 @@ void TestTwo_1()
     std::cout << "Cipher:\n" << cipher << std::endl;
     auto plain = ch.Decrypt(key, encr_iv, cipher);
     std::cout << "Actual:\n" << plain << std::endl;
+}
+
+void TestTwo_2()
+{
+    FileChangeChecker fcc;
+    auto mp = fcc.GetChangedFiles("D:\\CV");
 }

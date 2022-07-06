@@ -8,3 +8,9 @@
 
 typedef size_t file_size_t;
 typedef unsigned char byte;
+
+#ifdef _DEBUG
+	#define _PRINT(str) std::cout << str << std::endl;
+#else
+	#define _PRINT(str) 
+#endif
