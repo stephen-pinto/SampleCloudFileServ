@@ -74,3 +74,15 @@ string CloudFileServLib::BL::CryptoHelper::GenerateChecksum(const string content
 
     return hash;
 }
+
+string CloudFileServLib::BL::CryptoHelper::GenerateChecksum(const vector<byte> content)
+{
+    string hash;
+    SHA256 sha256;
+    VectorSource vsrc(content, true,
+        new HashFilter(sha256,
+            new Base64Encoder(
+                new StringSink(hash))));
+
+    return hash;
+}

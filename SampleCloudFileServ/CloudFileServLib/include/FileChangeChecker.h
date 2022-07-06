@@ -1,8 +1,10 @@
 #pragma once
 
+#include <map>
 #include "Common.h"
 #include "FileStoreStateInfo.h"
-#include <map>
+#include "FileChunker.h"
+#include "CryptoHelper.h"
 
 namespace CloudFileServLib
 {
@@ -11,9 +13,14 @@ namespace CloudFileServLib
 		class FileChangeChecker
 		{
 		public:
-			std::map<std::string, size_t> GetChangedFiles(const std::string& root);
+			FileChangeChecker(const std::string& root);
+			void Initialize();
+			std::map<std::string, size_t> GetChangedFiles();
+
 		private:
+			const string& root;
 			FileStoreStateInfo fileStoreState;
+			CryptoHelper cryptoHelper;
 		};
 	}
 }

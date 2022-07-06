@@ -14,3 +14,5 @@ typedef unsigned char byte;
 #else
 	#define _PRINT(str) 
 #endif
+
+#define BLOCK_SIZE 1024

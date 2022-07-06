@@ -1,6 +1,7 @@
 #pragma once
 #include "Common.h"
 #include <ctime>
+#include <cstdlib>
 
 namespace CloudFileServLib
 {
@@ -22,6 +23,29 @@ namespace CloudFileServLib
 			inline void SetPresence(bool present)
 			{
 				doesExist = present;
+			}
+
+			inline size_t operator -(FileProps fprops)
+			{
+				size_t tarSize = fprops.Checksums.size();
+				size_t curSize = Checksums.size();
+				size_t len = (tarSize > curSize) ? curSize : tarSize;
+
+				size_t i;
+				for (i = 1; i <= len; i++)
+				{
+					if (i <= curSize && i <= tarSize)
+					{
+						if (fprops.Checksums[i] == Checksums[i])
+							continue;
+					}
+				}
+
+				if (curSize == tarSize == i)
+					return 0;
+
+				//Largest number minus initial similar items = delta
+				return std::abs(std::abs((long long)(curSize - tarSize)) - (long long)i);
 			}
 
 		private:
