@@ -25,6 +25,10 @@ void TestTwo_1()
 
 void TestTwo_2()
 {
-    FileChangeChecker fcc;
-    auto mp = fcc.GetChangedFiles("D:\\CV");
+    std::string path("D:\\TestSpace\\TestFiles\\small");
+    FileChangeChecker fcc(path);
+    fcc.Initialize();
+    int x;
+    cin >> x;
+    auto mp = fcc.GetChangedFiles();
 }
