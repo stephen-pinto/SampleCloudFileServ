@@ -88,25 +88,6 @@ void CloudFileServLib::BL::BlobStorageProvider::DownloadFileTo(const string file
 	os.close();
 }
 
-thread BlobStorageProvider::DownloadFileTo2(const string fileName, const string destDir)
-{
-	if (containerClient.get() == NULL)
-		throw runtime_error("No container opened");
-
-	auto blobClient = containerClient->GetBlockBlobClient(fileName);
-	auto props = blobClient.GetProperties().Value;
-
-	vector<uint8_t> blobFile(props.BlobSize);
-	blobClient.DownloadTo(blobFile.data(), blobFile.size());
-
-	//Replace any path discrepences before writing to drive
-	string fullFileName(destDir + "\\" + fileName);
-	replace(fullFileName.begin(), fullFileName.end(), '/', '\\');
-	path fPath(fullFileName);
-
-	return fileWriter.WriteToFile(fullFileName, blobFile);
-}
-
 void BlobStorageProvider::UploadFile(const std::string fileName, const string content)
 {
 	if (containerClient.get() == NULL)
@@ -150,20 +131,4 @@ void CloudFileServLib::BL::BlobStorageProvider::DownloadAllFiles(const std::stri
 	{
 		DownloadFileTo(fname, destDir);
 	}
-}
-
-void CloudFileServLib::BL::BlobStorageProvider::DownloadAllFiles2(const std::string destDir, const std::string srcFolder)
-{
-	vector<thread> threads;
-
-	//Get list of all the files on the server first
-	vector<string> fileList = GetFileList();
-
-	//Launch download over multiple threads
-	for (auto fname : fileList)
-		threads.emplace_back(DownloadFileTo2(fname, destDir));
-
-	//Wait for all those threads to complete
-	for (thread& t : threads)
-		t.join();
 }

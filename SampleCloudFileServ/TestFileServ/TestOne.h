@@ -128,15 +128,4 @@ void Test4()
 	}
 
 	DeleteDirectoryContents(testRoot);
-
-	{
-		BlobStorageProvider blobProvider(connectionString);
-		blobProvider.OpenContainer("test");
-
-		auto start = high_resolution_clock::now();
-		blobProvider.DownloadAllFiles2(testRoot);
-		auto stop = high_resolution_clock::now();
-		auto duration = duration_cast<milliseconds>(stop - start);
-		_PRINT("Time taken for downloading with new method: " << duration.count() / 1024.0 << " seconds");
-	}
 }
