@@ -13,7 +13,7 @@ namespace CloudFileServLib
 		class BlobStorageProvider : public IFileBasedStorageProvider
 		{
 		public:
-			BlobStorageProvider(const std::string& connectionString);
+			BlobStorageProvider(const std::string connectionString);
 			~BlobStorageProvider();
 
 			// Inherited via IFileBasedStorageProvider
@@ -27,7 +27,7 @@ namespace CloudFileServLib
 			virtual void OpenContainer(const std::string containerName) override;
 
 		private:
-			const std::string& connectionString;
+			const std::string connectionString;
 			std::unique_ptr<BlobContainerClient> containerClient;
 		};
 	}

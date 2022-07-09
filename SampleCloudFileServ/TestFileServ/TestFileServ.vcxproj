@@ -142,7 +142,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestOne.h" />
+    <ClInclude Include="TestThree.h" />
     <ClInclude Include="TestTwo.h" />
+    <ClInclude Include="Util.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ConnectionStrings.txt">

@@ -1,12 +1,32 @@
 #include "pch.h"
 #include "..\include\CommandLineProvider.h"
 #include <boost/algorithm/string.hpp>
+#include "../include/BlobStorageProvider.h"
 
 using namespace CloudFileServLib::BL;
 using namespace std;
 using namespace boost;
 
 string binaryCmds[] = { "rm", "cp" };
+
+/// <summary>
+/// FIXME: Remove this function
+/// </summary>
+string ReadConnectionStringFromFile(string fileName)
+{
+	ifstream strm;
+	string content;
+	strm.open(fileName);
+	strm >> content;
+	return content;
+}
+
+CloudFileServLib::BL::CommandLineProvider::CommandLineProvider()
+{
+	auto connStr = ReadConnectionStringFromFile("ConnectionStrings.txt");
+	storageProvider = make_unique<BlobStorageProvider>(connStr);
+	storageProvider->OpenContainer("test");
+}
 
 int CommandLineProvider::Run(int argc, char** argv)
 {
@@ -21,7 +41,11 @@ int CommandLineProvider::Run(int argc, char** argv)
 			getline(cin, rootDir);
 			//Initialize
 			fileChangeChecker = make_unique<FileChangeChecker>(rootDir);
+			_PRINT("Wait downloading files from server...");
+			//Download all the files from the server
+			storageProvider->DownloadAllFiles(rootDir);
 			//TODO: Launch below operation in another thread
+			_PRINT("Downloading complete. Now initializing...");
 			fileChangeChecker->Initialize();
 			_PRINT("");
 		}

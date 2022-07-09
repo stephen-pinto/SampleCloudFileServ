@@ -15,7 +15,7 @@ using namespace CloudFileServLib::BL;
 using namespace std;
 using namespace boost::filesystem;
 
-BlobStorageProvider::BlobStorageProvider(const string& connStr) : connectionString(connStr)
+BlobStorageProvider::BlobStorageProvider(const string connStr) : connectionString(connStr)
 {
 }
 

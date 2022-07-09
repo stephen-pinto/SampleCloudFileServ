@@ -11,6 +11,7 @@
 #include <chrono>
 #include <direct.h>
 #include "../CloudFileServLib/include/BlobStorageProvider.h"
+#include "Util.h"
 
 using namespace boost::filesystem;
 using namespace CloudFileServLib::BL;
@@ -18,32 +19,6 @@ using namespace std;
 using namespace std::chrono;
 
 string containerName = "test";
-
-//string GetCurrentDir()
-//{
-//	char buffer[1024] = { 0 };
-//	GetModuleFileNameA(NULL, buffer, 1024);
-//	std::string::size_type pos = string(buffer).find_last_of("\\/");
-//	return string(buffer).substr(0, pos);
-//}
-
-string ReadConnectionStringFromFile(string fileName)
-{
-	ifstream strm;
-	string content;
-	strm.open(fileName);
-	strm >> content;
-	return content;
-}
-
-void DeleteDirectoryContents(const std::string& dirPath)
-{
-	namespace fs = boost::filesystem;
-	fs::path pathToRemove(dirPath);
-	for (fs::directory_iterator endDirItr, it(pathToRemove); it != endDirItr; ++it) {
-		fs::remove_all(it->path());
-	}
-}
 
 void Test1()
 {

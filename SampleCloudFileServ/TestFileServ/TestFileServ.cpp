@@ -5,8 +5,9 @@
 #include <crtdbg.h>
 #include <boost/program_options.hpp>
 #include "../CloudFileServLib/include/ListBlobs.h"
-#include "TestOne.h"
-#include "TestTwo.h"
+//#include "TestOne.h"
+//#include "TestTwo.h"
+#include "TestThree.h"
 
 using namespace CloudFileServLib::BL;
 
@@ -24,7 +25,9 @@ int main()
     //return TestTwo_3(0, NULL);
     //Test2();
     //Test3();
-    Test4();
+    //Test4();
+
+    Test1();
     return 0;
 }
 
