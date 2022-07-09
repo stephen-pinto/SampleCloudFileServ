@@ -2,7 +2,7 @@
 
 #include "../CloudFileServLib/include/CryptoHelper.h"
 #include "../CloudFileServLib/include/SaltGenerator.hpp"
-#include "../CloudFileServLib/include/FileChangeChecker.h"
+#include "../CloudFileServLib/include/CommandLineProvider.h"
 
 #define KEY_SIZE 32
 
@@ -31,4 +31,10 @@ void TestTwo_2()
     int x;
     cin >> x;
     auto mp = fcc.GetChangedFiles();
+}
+
+int TestTwo_3(int argc, char** argv)
+{
+    CommandLineProvider provider;
+    return provider.Run(argc, argv);
 }

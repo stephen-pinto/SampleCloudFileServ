@@ -8,9 +8,12 @@ using namespace boost::filesystem;
 using namespace boost::algorithm;
 using namespace CloudFileServLib::BL;
 
-FileChangeChecker::FileChangeChecker(const string& rootDir) : root(rootDir)
+FileChangeChecker::FileChangeChecker(const string rootDir) : root(rootDir)
 {}
 
+/// <summary>
+/// Generates initial list of the file changes to compare with future changes.
+/// </summary>
 void FileChangeChecker::Initialize()
 {
 	path rootPath(root);
@@ -45,21 +48,13 @@ void FileChangeChecker::Initialize()
 		}
 	}
 
-	_PRINT("Printing file list after initialization:\n\n");
-	for (auto item : fileStoreState.Files)
-	{
-		_PRINT("File: " << item.FileName);
-		_PRINT("Size: " << item.ActualSize);
-		_PRINT("Last Sync: " << item.LastSync);
-		_PRINT("Checksums: [" << item.Checksums.size() << "]");
-		for (auto chksm : item.Checksums)
-		{
-			_PRINT("	>>> " << chksm);
-		}
-	}
-	_PRINT("----------------------------------------");
+	_PRINT("Total files: " << fileStoreState.Files.size());
 }
 
+/// <summary>
+/// Gets the latest changes of files and compares with previous to determined changed blocks.
+/// </summary>
+/// <returns></returns>
 map<string, size_t> FileChangeChecker::GetChangedFiles()
 {
 	path root_path(root);
@@ -89,21 +84,10 @@ map<string, size_t> FileChangeChecker::GetChangedFiles()
 				fprops.Checksums.push_back(chkSum);
 			}
 
-			_PRINT("Printing file list after change:\n\n");
-			_PRINT("File: " << fprops.FileName);
-			_PRINT("Size: " << fprops.ActualSize);
-			_PRINT("Last Sync: " << fprops.LastSync);
-			_PRINT("Checksums: [" << fprops.Checksums.size() << "]");
-			for (auto chksm : fprops.Checksums)
-			{
-				_PRINT("	>>> " << chksm);
-			}
-			_PRINT("----------------------------------------");
-
 			//Capture all the properties matching this file
 			auto it = find_if(fileStoreState.Files.begin(), fileStoreState.Files.end(), [&fprops](const FileProps& fp) { return fp.FileName == fprops.FileName; });
 
-			//If we found even one entry
+			//If we found our entry
 			if (it != fileStoreState.Files.end())
 			{
 				//Get the difference if any
@@ -114,17 +98,34 @@ map<string, size_t> FileChangeChecker::GetChangedFiles()
 				{
 					changeInfo.insert(pair<string, size_t>(fprops.FileName, diff));
 
-					//If there is any differnce then clear the previous info and load the new data
+					//If there is any differnce then clear the previous info and load the new checksums
 					it->Checksums.clear();
 					it->Checksums.insert(it->Checksums.end(), fprops.Checksums.begin(), fprops.Checksums.end());
 				}
 			}
-
-			fileStoreState.Files.push_back(fprops);
+			else
+			{
+				//If we didn't find this file then add it to the store and notify as changed			
+				fileStoreState.Files.push_back(fprops);
+				changeInfo.insert(pair<string, size_t>(fprops.FileName, fprops.Checksums.size()));
+			}
 		}
 	}
 
-	_PRINT("Total files found: " << fileStoreState.Files.size());
+	_PRINT("Total files: " << fileStoreState.Files.size());
 
 	return changeInfo;
+}
+
+std::vector<ReadOnlyFileProps> FileChangeChecker::GetSyncdFiles()
+{
+	std::vector<ReadOnlyFileProps> files;
+
+	for (auto& item : fileStoreState.Files)
+	{
+		ReadOnlyFileProps rfprops(item.FileName, item.FileType, item.ActualSize, item.LastSync);
+		files.push_back(rfprops);
+	}
+
+	return files;
 }

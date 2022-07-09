@@ -19,10 +19,11 @@ void SimpleTest()
 
 int main()
 {
-    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    //_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     //Test1();
-    TestTwo_2();
-    _CrtDumpMemoryLeaks();
+    //TestTwo_2();
+    return TestTwo_3(0, NULL);
+    //_CrtDumpMemoryLeaks();
     return 0;
 }
 

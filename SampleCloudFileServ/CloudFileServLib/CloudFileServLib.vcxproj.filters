@@ -63,6 +63,12 @@
     <ClInclude Include="include\FileChangeChecker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\IPrintable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ReadOnlyFileProps.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CloudFileServLib.cpp">

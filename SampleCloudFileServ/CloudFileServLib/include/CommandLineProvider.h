@@ -1,7 +1,7 @@
 #pragma once
-#include <string>
-#include <vector>
-#include "../include/common.h"
+#include <memory>
+#include "Common.h"
+#include "FileChangeChecker.h"
 
 namespace CloudFileServLib
 {
@@ -14,6 +14,10 @@ namespace CloudFileServLib
         private:
             int HandleCommand(const std::string command);
             int HandleBinaryCommand(std::vector<std::string> params);
+
+            std::string rootDir;
+            std::string cacheDir;
+            std::unique_ptr<FileChangeChecker> fileChangeChecker;
         };
 	}
 }

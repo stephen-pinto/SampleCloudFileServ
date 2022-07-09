@@ -155,6 +155,8 @@
     <ClInclude Include="include\IFileBasedStorageProvider.h" />
     <ClInclude Include="include\BlobStorageProvider.h" />
     <ClInclude Include="include\framework.h" />
+    <ClInclude Include="include\IPrintable.h" />
+    <ClInclude Include="include\ReadOnlyFileProps.h" />
     <ClInclude Include="include\SaltGenerator.hpp" />
     <ClInclude Include="include\StorageProvider.h" />
     <ClInclude Include="src\pch.h" />

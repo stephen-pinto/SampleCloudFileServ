@@ -1,13 +1,16 @@
 #pragma once
 #include "Common.h"
+#include "IPrintable.h"
 #include <ctime>
 #include <cstdlib>
+#include <string>
+#include <sstream>
 
 namespace CloudFileServLib
 {
 	namespace BL
 	{
-		struct FileProps
+		struct FileProps : public IPrintable
 		{
 			std::string FileName;
 			std::string FileType;
@@ -49,6 +52,13 @@ namespace CloudFileServLib
 
 				//Largest number minus initial similar items = delta
 				return std::abs((long long)max - (long long)i);
+			}
+
+			std::string ToString()
+			{
+				std::ostringstream stringStream;
+				stringStream << "FileName: `" << FileName << "` | Size: `" << ActualSize << "` bytes" << "` | Type: `" << FileType << "`";
+				return stringStream.str();
 			}
 
 		private:
