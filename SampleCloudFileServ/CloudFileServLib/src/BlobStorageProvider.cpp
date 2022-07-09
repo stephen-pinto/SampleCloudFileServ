@@ -4,6 +4,7 @@
 #include <ostream>
 #include <fstream>
 #include <boost/filesystem/path.hpp>
+#include <direct.h>
 
 using namespace Azure::Storage::Blobs::Models;
 using namespace CloudFileServLib::BL;
@@ -67,14 +68,24 @@ void CloudFileServLib::BL::BlobStorageProvider::DownloadFileTo(const string file
 	blobClient.DownloadTo(blobFile.data(), blobFile.size());
 	
 	//Replace any path discrepences before writing to drive
-	string finalPath(destDir + "/" + fileName);
-	replace(finalPath.begin(), finalPath.end(), '/', '\\');
+	string fullFileName(destDir + "\\" + fileName);
+	replace(fullFileName.begin(), fullFileName.end(), '/', '\\');
+	path fPath(fullFileName);
+	_mkdir(fPath.parent_path().string().c_str());
+
+	/*string dir(destDir + "\\" + fileName);
+	replace(dir.begin(), dir.end(), '/', '\\');
+	path fpath(dir);
+	string dirPath = fpath.parent_path().string();
+	_mkdir(dirPath.c_str());
+	string finalPath(destDir + "/" + fileName);*/
+	//replace(finalPath.begin(), finalPath.end(), '/', '\\');
 
 	auto content = string(blobFile.begin(), blobFile.end());
 	_PRINT(content);
 
 	//Write to the given path
-	ofstream os(finalPath, ios::out | ios::binary);
+	ofstream os(fullFileName, ios::out | ios::binary);
 	os.write(content.c_str(), content.length());
 	os.flush();
 	os.close();
