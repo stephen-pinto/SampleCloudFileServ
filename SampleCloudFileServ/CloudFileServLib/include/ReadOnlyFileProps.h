@@ -8,6 +8,10 @@ namespace CloudFileServLib
 {
 	namespace BL
 	{
+		/// <summary>
+		/// This struct acts a readonly representation of the currently available information
+		/// The result of this data should not be saved
+		/// </summary>
 		struct ReadOnlyFileProps : public IPrintable
 		{
 			const std::string& FileName;

@@ -36,7 +36,7 @@ vector<string> CloudFileServLib::BL::BlobStorageProvider::GetFileList()
 	return fileList;
 }
 
-string CloudFileServLib::BL::BlobStorageProvider::GetFile(const string fileName)
+string CloudFileServLib::BL::BlobStorageProvider::DownloadFile(const string fileName)
 {
 	if (containerClient.get() == NULL)
 		throw runtime_error("No container opened");
@@ -48,6 +48,16 @@ string CloudFileServLib::BL::BlobStorageProvider::GetFile(const string fileName)
 	blobClient.DownloadTo(blobFile.data(), blobFile.size());
 
 	return string(blobFile.begin(), blobFile.end());
+}
+
+void BlobStorageProvider::UploadFile(const std::string fileName, const string content)
+{
+	if (containerClient.get() == NULL)
+		throw runtime_error("No container opened");
+
+	auto blobClient = containerClient->GetBlockBlobClient(fileName);
+
+	blobClient.UploadFrom((uint8_t*)content.c_str(), content.length());
 }
 
 FileProps CloudFileServLib::BL::BlobStorageProvider::GetFileProps(const string fileName)
