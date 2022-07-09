@@ -4,6 +4,8 @@
 #include <ostream>
 #include <fstream>
 #include <boost/filesystem/path.hpp>
+#include <boost/filesystem/directory.hpp>
+#include <boost/filesystem/operations.hpp>
 #include <direct.h>
 
 using namespace Azure::Storage::Blobs::Models;
@@ -71,22 +73,16 @@ void CloudFileServLib::BL::BlobStorageProvider::DownloadFileTo(const string file
 	string fullFileName(destDir + "\\" + fileName);
 	replace(fullFileName.begin(), fullFileName.end(), '/', '\\');
 	path fPath(fullFileName);
-	_mkdir(fPath.parent_path().string().c_str());
 
-	/*string dir(destDir + "\\" + fileName);
-	replace(dir.begin(), dir.end(), '/', '\\');
-	path fpath(dir);
-	string dirPath = fpath.parent_path().string();
-	_mkdir(dirPath.c_str());
-	string finalPath(destDir + "/" + fileName);*/
-	//replace(finalPath.begin(), finalPath.end(), '/', '\\');
-
-	auto content = string(blobFile.begin(), blobFile.end());
-	_PRINT(content);
+	//Create folder structure if not exists before writing to file
+	if (!exists(fPath.parent_path()))
+	{		
+		int res = _mkdir(fPath.parent_path().string().c_str());
+	}
 
 	//Write to the given path
 	ofstream os(fullFileName, ios::out | ios::binary);
-	os.write(content.c_str(), content.length());
+	os.write((char*)blobFile.data(), blobFile.size());
 	os.flush();
 	os.close();
 }
@@ -132,6 +128,6 @@ void CloudFileServLib::BL::BlobStorageProvider::DownloadAllFiles(const std::stri
 	vector<string> fileList = GetFileList();
 	for (auto fname : fileList)
 	{
-		DownloadFile(fname);
+		DownloadFileTo(fname, destDir);
 	}
 }

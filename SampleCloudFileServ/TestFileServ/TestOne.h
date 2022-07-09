@@ -73,3 +73,23 @@ void Test2()
 
 	blobProvider.DownloadFileTo(fileList[6], "D:\\TestSpace\\TestFiles\\remote");
 }
+
+void Test3()
+{
+	auto connectionString = ReadConnectionStringFromFile("ConnectionStrings.txt");
+	BlobStorageProvider blobProvider(connectionString);
+	blobProvider.OpenContainer("test");
+
+	auto fileList = blobProvider.GetFileList();
+
+	cout << "Complete list of files in the provided storage:" << endl;
+	for (auto fn : fileList)
+	{
+		path fpath(fn);
+		auto f = fpath.leaf().string();
+		auto p = fpath.parent_path().string();
+		cout << fn << endl;
+	}
+
+	blobProvider.DownloadAllFiles("D:\\TestSpace\\TestFiles\\remote");
+}

@@ -22,7 +22,7 @@ namespace CloudFileServLib
 			virtual void DownloadFileTo(const std::string destDir, const std::string fileName) override;
 			virtual void UploadFile(const std::string fileName, const std::string content) override;
 			virtual FileProps GetFileProps(const std::string fileName) override;
-			virtual void DownloadAllFiles(const std::string destDir, const std::string srcFolder = NULL) override;
+			virtual void DownloadAllFiles(const std::string destDir, const std::string srcFolder = "") override;
 			virtual void OpenContainer(const std::string containerName) override;
 
 		private:
