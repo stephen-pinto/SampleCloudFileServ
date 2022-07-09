@@ -1,9 +1,14 @@
 #include "pch.h"
 #include "../include/IFileBasedStorageProvider.h"
 #include "../include/BlobStorageProvider.h"
+#include <ostream>
+#include <fstream>
+#include <boost/filesystem/path.hpp>
+
 using namespace Azure::Storage::Blobs::Models;
 using namespace CloudFileServLib::BL;
 using namespace std;
+using namespace boost::filesystem;
 
 BlobStorageProvider::BlobStorageProvider(const string& connStr) : connectionString(connStr)
 {
@@ -50,6 +55,31 @@ string CloudFileServLib::BL::BlobStorageProvider::DownloadFile(const string file
 	return string(blobFile.begin(), blobFile.end());
 }
 
+void CloudFileServLib::BL::BlobStorageProvider::DownloadFileTo(const string fileName, const string destDir)
+{
+	if (containerClient.get() == NULL)
+		throw runtime_error("No container opened");
+
+	auto blobClient = containerClient->GetBlockBlobClient(fileName);
+	auto props = blobClient.GetProperties().Value;
+
+	vector<uint8_t> blobFile(props.BlobSize);
+	blobClient.DownloadTo(blobFile.data(), blobFile.size());
+	
+	//Replace any path discrepences before writing to drive
+	string finalPath(destDir + "/" + fileName);
+	replace(finalPath.begin(), finalPath.end(), '/', '\\');
+
+	auto content = string(blobFile.begin(), blobFile.end());
+	_PRINT(content);
+
+	//Write to the given path
+	ofstream os(finalPath, ios::out | ios::binary);
+	os.write(content.c_str(), content.length());
+	os.flush();
+	os.close();
+}
+
 void BlobStorageProvider::UploadFile(const std::string fileName, const string content)
 {
 	if (containerClient.get() == NULL)
@@ -84,4 +114,13 @@ FileProps CloudFileServLib::BL::BlobStorageProvider::GetFileProps(const string f
 	fp.ActualSize = props.BlobSize;
 	
 	return fp;
+}
+
+void CloudFileServLib::BL::BlobStorageProvider::DownloadAllFiles(const std::string destDir, const std::string srcFolder)
+{
+	vector<string> fileList = GetFileList();
+	for (auto fname : fileList)
+	{
+		DownloadFile(fname);
+	}
 }

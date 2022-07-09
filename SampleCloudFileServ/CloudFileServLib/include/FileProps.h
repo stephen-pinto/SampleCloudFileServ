@@ -14,7 +14,7 @@ namespace CloudFileServLib
 		{
 			std::string FileName;
 			std::string FileType;
-			file_size_t ActualSize;
+			file_size_t ActualSize = 0;
 			std::vector<std::string> Checksums;
 			time_t LastSync;
 
