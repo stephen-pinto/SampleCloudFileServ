@@ -152,6 +152,7 @@
     <ClInclude Include="include\FileProps.h" />
     <ClInclude Include="include\FileStorageProvider.h" />
     <ClInclude Include="include\FileStoreStateInfo.h" />
+    <ClInclude Include="include\ParallelFileWriter.h" />
     <ClInclude Include="include\IFileBasedStorageProvider.h" />
     <ClInclude Include="include\BlobStorageProvider.h" />
     <ClInclude Include="include\framework.h" />

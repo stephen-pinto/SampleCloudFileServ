@@ -7,6 +7,7 @@
 #include <boost/filesystem/directory.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <direct.h>
+#include <thread>
 
 using namespace Azure::Storage::Blobs::Models;
 using namespace CloudFileServLib::BL;
@@ -26,7 +27,7 @@ void CloudFileServLib::BL::BlobStorageProvider::OpenContainer(const string conta
 {
 	//Initialize the contianerClient
 	auto client = BlobContainerClient::CreateFromConnectionString(connectionString, containerName);
-	containerClient = make_unique<BlobContainerClient>(client);	
+	containerClient = make_unique<BlobContainerClient>(client);
 }
 
 vector<string> CloudFileServLib::BL::BlobStorageProvider::GetFileList()
@@ -51,7 +52,7 @@ string CloudFileServLib::BL::BlobStorageProvider::DownloadFile(const string file
 
 	auto blobClient = containerClient->GetBlockBlobClient(fileName);
 	auto props = blobClient.GetProperties().Value;
-	
+
 	vector<uint8_t> blobFile(props.BlobSize);
 	blobClient.DownloadTo(blobFile.data(), blobFile.size());
 
@@ -68,7 +69,7 @@ void CloudFileServLib::BL::BlobStorageProvider::DownloadFileTo(const string file
 
 	vector<uint8_t> blobFile(props.BlobSize);
 	blobClient.DownloadTo(blobFile.data(), blobFile.size());
-	
+
 	//Replace any path discrepences before writing to drive
 	string fullFileName(destDir + "\\" + fileName);
 	replace(fullFileName.begin(), fullFileName.end(), '/', '\\');
@@ -76,7 +77,7 @@ void CloudFileServLib::BL::BlobStorageProvider::DownloadFileTo(const string file
 
 	//Create folder structure if not exists before writing to file
 	if (!exists(fPath.parent_path()))
-	{		
+	{
 		int res = _mkdir(fPath.parent_path().string().c_str());
 	}
 
@@ -85,6 +86,25 @@ void CloudFileServLib::BL::BlobStorageProvider::DownloadFileTo(const string file
 	os.write((char*)blobFile.data(), blobFile.size());
 	os.flush();
 	os.close();
+}
+
+thread BlobStorageProvider::DownloadFileTo2(const string fileName, const string destDir)
+{
+	if (containerClient.get() == NULL)
+		throw runtime_error("No container opened");
+
+	auto blobClient = containerClient->GetBlockBlobClient(fileName);
+	auto props = blobClient.GetProperties().Value;
+
+	vector<uint8_t> blobFile(props.BlobSize);
+	blobClient.DownloadTo(blobFile.data(), blobFile.size());
+
+	//Replace any path discrepences before writing to drive
+	string fullFileName(destDir + "\\" + fileName);
+	replace(fullFileName.begin(), fullFileName.end(), '/', '\\');
+	path fPath(fullFileName);
+
+	return fileWriter.WriteToFile(fullFileName, blobFile);
 }
 
 void BlobStorageProvider::UploadFile(const std::string fileName, const string content)
@@ -101,7 +121,7 @@ FileProps CloudFileServLib::BL::BlobStorageProvider::GetFileProps(const string f
 {
 	if (containerClient.get() == NULL)
 		throw runtime_error("No container opened");
-	
+
 	FileProps fp;
 	BlobProperties props;
 	try
@@ -112,14 +132,14 @@ FileProps CloudFileServLib::BL::BlobStorageProvider::GetFileProps(const string f
 	catch (Azure::Storage::StorageException e)
 	{
 		if (e.StatusCode == Azure::Core::Http::HttpStatusCode::NotFound)
-			return fp;		
+			return fp;
 	}
 
 	fp.SetPresence(true);
 	fp.FileName = fileName;
 	fp.FileType = props.BlobType.ToString();
 	fp.ActualSize = props.BlobSize;
-	
+
 	return fp;
 }
 
@@ -130,4 +150,20 @@ void CloudFileServLib::BL::BlobStorageProvider::DownloadAllFiles(const std::stri
 	{
 		DownloadFileTo(fname, destDir);
 	}
+}
+
+void CloudFileServLib::BL::BlobStorageProvider::DownloadAllFiles2(const std::string destDir, const std::string srcFolder)
+{
+	vector<thread> threads;
+
+	//Get list of all the files on the server first
+	vector<string> fileList = GetFileList();
+
+	//Launch download over multiple threads
+	for (auto fname : fileList)
+		threads.emplace_back(DownloadFileTo2(fname, destDir));
+
+	//Wait for all those threads to complete
+	for (thread& t : threads)
+		t.join();
 }

@@ -69,6 +69,9 @@
     <ClInclude Include="include\ReadOnlyFileProps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\ParallelFileWriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CloudFileServLib.cpp">

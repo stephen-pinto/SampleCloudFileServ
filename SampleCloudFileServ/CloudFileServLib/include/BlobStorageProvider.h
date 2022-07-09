@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "IFileBasedStorageProvider.h"
 #include <azure/storage/blobs.hpp>
+#include "ParallelFileWriter.h"
 
 namespace CloudFileServLib
 {
@@ -20,14 +21,17 @@ namespace CloudFileServLib
 			virtual std::vector<std::string> GetFileList() override;
 			virtual std::string DownloadFile(const std::string fileName) override;
 			virtual void DownloadFileTo(const std::string destDir, const std::string fileName) override;
+			virtual thread DownloadFileTo2(const std::string destDir, const std::string fileName);
 			virtual void UploadFile(const std::string fileName, const std::string content) override;
 			virtual FileProps GetFileProps(const std::string fileName) override;
 			virtual void DownloadAllFiles(const std::string destDir, const std::string srcFolder = "") override;
+			virtual void DownloadAllFiles2(const std::string destDir, const std::string srcFolder = "");
 			virtual void OpenContainer(const std::string containerName) override;
 
 		private:
 			const std::string& connectionString;
 			std::unique_ptr<BlobContainerClient> containerClient;
+			ParallelFileWriter fileWriter;
 		};
 	}
 }
