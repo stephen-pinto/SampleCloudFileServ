@@ -18,6 +18,7 @@ namespace CloudFileServLib
         private:
             int HandleCommand(const std::string command);
             int HandleBinaryCommand(std::vector<std::string> params);
+            std::string ServerPath(std::string actualPath);
 
             std::string rootDir;
             std::string cacheDir;

@@ -12,7 +12,7 @@ string binaryCmds[] = { "rm", "cp" };
 /// <summary>
 /// FIXME: Remove this function
 /// </summary>
-string ReadConnectionStringFromFile(string fileName)
+string TempReadConnectionStringFromFile(string fileName)
 {
 	ifstream strm;
 	string content;
@@ -23,7 +23,7 @@ string ReadConnectionStringFromFile(string fileName)
 
 CloudFileServLib::BL::CommandLineProvider::CommandLineProvider()
 {
-	auto connStr = ReadConnectionStringFromFile("ConnectionStrings.txt");
+	auto connStr = TempReadConnectionStringFromFile("ConnectionStrings.txt");
 	storageProvider = make_unique<BlobStorageProvider>(connStr);
 	storageProvider->OpenContainer("test");
 }
@@ -107,6 +107,12 @@ int CommandLineProvider::HandleCommand(string command)
 				_PRINT("BlocksChanged: " << item.second);
 			}
 			_PRINT("-------");
+
+			//Upload changed files
+			for (auto item : listMap)
+			{
+				storageProvider->UploadFileFrom(ServerPath(item.first), item.first);
+			}
 		}
 		else
 		{
@@ -148,4 +154,12 @@ int CommandLineProvider::HandleBinaryCommand(std::vector<std::string> params)
 	}
 
 	return 0;
+}
+
+std::string CloudFileServLib::BL::CommandLineProvider::ServerPath(std::string path)
+{
+	string::size_type ipos = path.find(rootDir);
+	if (ipos != string::npos)
+		path.erase(ipos, rootDir.append("\\").length());
+	return path;
 }
