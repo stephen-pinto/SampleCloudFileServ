@@ -23,7 +23,7 @@ int CommandLineProvider::Run(int argc, char** argv)
 			fileChangeChecker = make_unique<FileChangeChecker>(rootDir);
 			//TODO: Launch below operation in another thread
 			fileChangeChecker->Initialize();
-			_PRINT("\n");
+			_PRINT("");
 		}
 
 		cout << "$> ";
@@ -61,7 +61,7 @@ int CommandLineProvider::HandleCommand(string command)
 	{
 		auto files = fileChangeChecker->GetSyncdFiles();
 		for (auto& item : files)
-			_PRINT(item.ToString());		
+			_PRINT(item.ToString());
 	}
 	else if (command == "pwd")
 	{
@@ -72,14 +72,26 @@ int CommandLineProvider::HandleCommand(string command)
 		//Make sure fileChangeChecker.Initialize was complete before proceeding here
 		auto listMap = fileChangeChecker->GetChangedFiles();
 
-		_PRINT("Files changed:", listMap.size());
-		_PRINT("Changed files:");
-		for (auto item : listMap)
+		_PRINT("Files changed: " << listMap.size());
+		if (listMap.size() > 0)
 		{
-			_PRINT("Filename: " << item.first);
-			_PRINT("BlocksChanged: " << item.second);
+			_PRINT("Changed files:");
+			_PRINT("-------");
+			for (auto item : listMap)
+			{
+				_PRINT("Filename: " << item.first);
+				_PRINT("BlocksChanged: " << item.second);
+			}
+			_PRINT("-------");
 		}
-		_PRINT("-------");
+		else
+		{
+			_PRINT("No files were changed since last sync");
+		}
+	}
+	else if (command == "clear")
+	{
+		system("cls");		
 	}
 	else
 	{
