@@ -15,6 +15,7 @@ namespace CloudFileServLib
 			virtual std::string DownloadFile(const std::string fileName) = 0;
 			virtual void DownloadFileTo(const std::string fileName, std::string destDir) = 0;
 			virtual void UploadFile(const std::string fileName, const std::string content) = 0;
+			virtual void UploadFileFrom(const std::string fileName, const std::string filePath) = 0;
 			virtual void DownloadAllFiles(const std::string destDir, const std::string srcFolder = "") = 0;
 			virtual FileProps GetFileProps(const std::string fileName) = 0;
 		};

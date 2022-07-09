@@ -10,6 +10,7 @@
 #include <thread>
 
 using namespace Azure::Storage::Blobs::Models;
+using namespace Azure::Core::IO;
 using namespace CloudFileServLib::BL;
 using namespace std;
 using namespace boost::filesystem;
@@ -93,9 +94,30 @@ void BlobStorageProvider::UploadFile(const std::string fileName, const string co
 	if (containerClient.get() == NULL)
 		throw runtime_error("No container opened");
 
-	auto blobClient = containerClient->GetBlockBlobClient(fileName);
+	//Fix the slashes first
+	string fileNameUpd(fileName);
+	replace(fileNameUpd.begin(), fileNameUpd.end(), '\\', '/');
+
+	auto blobClient = containerClient->GetBlockBlobClient(fileNameUpd);
 
 	blobClient.UploadFrom((uint8_t*)content.c_str(), content.length());
+}
+
+void BlobStorageProvider::UploadFileFrom(const std::string fileName, const string filePath)
+{
+	if (containerClient.get() == NULL)
+		throw runtime_error("No container opened");
+
+	//Fix the slashes first
+	string fileNameUpd(fileName);
+	replace(fileNameUpd.begin(), fileNameUpd.end(), '\\', '/');
+
+	//Get client for this file name
+	auto blobClient = containerClient->GetBlockBlobClient(fileNameUpd);
+
+	//Upload the file
+	FileBodyStream fbs(filePath);
+	blobClient.Upload(fbs);
 }
 
 FileProps CloudFileServLib::BL::BlobStorageProvider::GetFileProps(const string fileName)

@@ -21,6 +21,7 @@ namespace CloudFileServLib
 			virtual std::string DownloadFile(const std::string fileName) override;
 			virtual void DownloadFileTo(const std::string destDir, const std::string fileName) override;
 			virtual void UploadFile(const std::string fileName, const std::string content) override;
+			virtual void UploadFileFrom(const std::string fileName, const std::string filePath) override;
 			virtual FileProps GetFileProps(const std::string fileName) override;
 			virtual void DownloadAllFiles(const std::string destDir, const std::string srcFolder = "") override;
 			virtual void OpenContainer(const std::string containerName) override;
