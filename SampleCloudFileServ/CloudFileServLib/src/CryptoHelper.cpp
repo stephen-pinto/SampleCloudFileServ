@@ -20,6 +20,7 @@ string CloudFileServLib::BL::CryptoHelper::Encrypt(const CryptoPP::SecByteBlock&
     try
     {
         //Encrypt the content using AES algorithm
+        //We could also use CBC but we chose a more secure EAX
         EAX<AES>::Encryption encr;
         encr.SetKeyWithIV(key, key.size(), iv);
         StringSource str(data, true, new AuthenticatedEncryptionFilter(encr, new StringSink(encrText)));
