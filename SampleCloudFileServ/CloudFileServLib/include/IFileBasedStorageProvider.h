@@ -10,6 +10,7 @@ namespace CloudFileServLib
 	{
 		class IFileBasedStorageProvider
 		{
+		public:
 			virtual std::vector<std::string> GetFileList() = 0;
 			virtual void OpenContainer(const std::string containerName) = 0;
 			virtual std::string DownloadFile(const std::string fileName) = 0;

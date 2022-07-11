@@ -2,6 +2,7 @@
 #include "..\include\CommandLineProvider.h"
 #include <boost/algorithm/string.hpp>
 #include "../include/BlobStorageProvider.h"
+#include "../include/StorageProviderFactory.h"
 
 using namespace CloudFileServLib::BL;
 using namespace std;
@@ -24,7 +25,8 @@ string TempReadConnectionStringFromFile(string fileName)
 CloudFileServLib::BL::CommandLineProvider::CommandLineProvider()
 {
 	auto connStr = TempReadConnectionStringFromFile("ConnectionStrings.txt");
-	storageProvider = make_unique<BlobStorageProvider>(connStr);
+	//storageProvider = make_unique<BlobStorageProvider>(connStr);
+	storageProvider = unique_ptr<IFileBasedStorageProvider>(StorageProviderFactory::GetDefaultProvider(connStr));
 	storageProvider->OpenContainer("test");
 }
 

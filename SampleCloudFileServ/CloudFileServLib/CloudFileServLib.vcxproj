@@ -160,6 +160,7 @@
     <ClInclude Include="include\ReadOnlyFileProps.h" />
     <ClInclude Include="include\SaltGenerator.hpp" />
     <ClInclude Include="include\StorageProvider.h" />
+    <ClInclude Include="include\StorageProviderFactory.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="include\ListBlobs.h" />
   </ItemGroup>

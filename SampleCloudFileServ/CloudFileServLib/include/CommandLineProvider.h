@@ -23,7 +23,7 @@ namespace CloudFileServLib
             std::string rootDir;
             std::string cacheDir;
             std::unique_ptr<FileChangeChecker> fileChangeChecker;
-            std::unique_ptr<BlobStorageProvider> storageProvider;
+            std::unique_ptr<IFileBasedStorageProvider> storageProvider;
         };
 	}
 }

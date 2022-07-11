@@ -9,7 +9,7 @@ using namespace std;
 
 void Test1()
 {
-	string rootDir("D:\\TestSpace\\TestFiles\\remote");
+	string rootDir("D:\\Workspace\\TestSpace\\remote");
 	DeleteDirectoryContents(rootDir);
 	CommandLineProvider cp;
 	cp.Run(0, NULL);

@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "../include/IFileBasedStorageProvider.h"
 #include "../include/BlobStorageProvider.h"
 #include <ostream>
 #include <fstream>
