@@ -21,3 +21,11 @@ void Test2()
 	provider.OpenContainer("test");
 	provider.DownloadAllFiles("D:\\Workspace\\TestSpace\\remote2");
 }
+
+void Test3()
+{
+	auto connectionString = ReadConnectionStringFromFile("ConnectionStrings.txt");
+	FileShareProvider provider(connectionString);
+	provider.OpenContainer("test");
+	provider.UploadFileFrom("small\\vsmall\\b.txt", "D:\\Workspace\\TestSpace\\remote2\\small\\vsmall\\b.txt");
+}

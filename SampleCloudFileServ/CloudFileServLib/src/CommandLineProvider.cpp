@@ -26,7 +26,7 @@ CloudFileServLib::BL::CommandLineProvider::CommandLineProvider()
 {
 	auto connStr = TempReadConnectionStringFromFile("ConnectionStrings.txt");
 	//storageProvider = make_unique<BlobStorageProvider>(connStr);
-	storageProvider = unique_ptr<IFileBasedStorageProvider>(StorageProviderFactory::GetDefaultProvider(connStr));
+	storageProvider = unique_ptr<IFileBasedStorageProvider>(StorageProviderFactory::GetDefaultProvider(connStr, 1));
 	storageProvider->OpenContainer("test");
 }
 

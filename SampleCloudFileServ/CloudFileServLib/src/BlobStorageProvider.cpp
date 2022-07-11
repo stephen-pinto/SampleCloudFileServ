@@ -69,6 +69,7 @@ void CloudFileServLib::BL::BlobStorageProvider::DownloadFileTo(const string file
 
 	vector<uint8_t> blobFile(props.BlobSize);
 	blobClient.DownloadTo(blobFile.data(), blobFile.size());
+	//NOTE: DownloadTo with filename could have been used but it was done so on purpose for learning
 
 	//Replace any path discrepences before writing to drive
 	string fullFileName(destDir + "\\" + fileName);
@@ -117,6 +118,7 @@ void BlobStorageProvider::UploadFileFrom(const std::string fileName, const strin
 	//Upload the file
 	FileBodyStream fbs(filePath);
 	blobClient.Upload(fbs);
+	//NOTE: UploadFrom with filename could have been used but it was done so on purpose for learning
 }
 
 FileProps CloudFileServLib::BL::BlobStorageProvider::GetFileProps(const string fileName)
@@ -151,8 +153,7 @@ void CloudFileServLib::BL::BlobStorageProvider::DownloadAllFiles(const std::stri
 		throw runtime_error("No file share opened");
 
 	vector<string> fileList = GetFileList();
+	
 	for (auto fname : fileList)
-	{
-		DownloadFileTo(fname, destDir);
-	}
+		DownloadFileTo(fname, destDir);	
 }

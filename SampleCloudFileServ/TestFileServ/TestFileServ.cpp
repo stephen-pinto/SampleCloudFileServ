@@ -7,8 +7,8 @@
 #include "../CloudFileServLib/include/ListBlobs.h"
 //#include "TestOne.h"
 //#include "TestTwo.h"
-//#include "TestThree.h"
-#include "TestFour.h"
+#include "TestThree.h"
+//#include "TestFour.h"
 
 using namespace CloudFileServLib::BL;
 
@@ -28,7 +28,7 @@ int main()
     //Test3();
     //Test4();
 
-    Test2();
+    Test1();
     return 0;
 }
 

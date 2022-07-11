@@ -35,6 +35,7 @@ vector<string> FileShareProvider::GetFileListFromDir(ShareDirectoryClient dirCli
 	vector<string> list;
 	auto resp = dirClient.ListFilesAndDirectories();
 
+	//Get info on all the files in this directory
 	for (auto file : resp.Files)
 	{
 		if (!resp.DirectoryPath.empty())
@@ -43,6 +44,7 @@ vector<string> FileShareProvider::GetFileListFromDir(ShareDirectoryClient dirCli
 			list.push_back(file.Name);
 	}
 
+	//Get info on all the sub-directories in this directory
 	for (auto dir : resp.Directories)
 	{
 		vector<string> dirList = GetFileListFromDir(dirClient.GetSubdirectoryClient(dir.Name));
@@ -89,6 +91,17 @@ void FileShareProvider::UploadFileFrom(const string fileName, const string fileP
 {
 	if (fileShareClient.get() == NULL)
 		throw runtime_error("No container opened");
+
+	//Fix the slashes first
+	string fileNameUpd(fileName);
+	replace(fileNameUpd.begin(), fileNameUpd.end(), '\\', '/');
+
+	//Open client
+	auto fileClient = fileShareClient->GetRootDirectoryClient().GetFileClient(fileNameUpd);
+
+	//Upload the file
+	FileBodyStream fbs(filePath);
+	fileClient.UploadFrom(filePath);
 }
 
 void FileShareProvider::DownloadAllFiles(const string destDir, const string srcFolder)
@@ -97,10 +110,9 @@ void FileShareProvider::DownloadAllFiles(const string destDir, const string srcF
 		throw runtime_error("No container opened");
 
 	vector<string> fileList = GetFileList();
+
 	for (auto fname : fileList)
-	{
 		DownloadFileTo(fname, destDir);
-	}
 }
 
 FileProps FileShareProvider::GetFileProps(const string fileName)
@@ -108,10 +120,24 @@ FileProps FileShareProvider::GetFileProps(const string fileName)
 	if (fileShareClient.get() == NULL)
 		throw runtime_error("No container opened");
 
-	return FileProps();
-}
+	FileProps fp;
+	FileProperties props;
 
-//vector<string> FileShareProvider::GetFileListFromDir(DirectoryItem dirPath)
-//{
-//    
-//}
+	try
+	{
+		auto fileClient = fileShareClient->GetRootDirectoryClient().GetFileClient(fileName);
+		props = fileClient.GetProperties().Value;
+	}
+	catch (Azure::Storage::StorageException e)
+	{
+		if (e.StatusCode == Azure::Core::Http::HttpStatusCode::NotFound)
+			return fp;
+	}
+
+	fp.SetPresence(true);
+	fp.FileName = fileName;
+	fp.FileType = "";
+	fp.ActualSize = props.FileSize;
+
+	return fp;
+}

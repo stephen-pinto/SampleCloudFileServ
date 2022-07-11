@@ -4,6 +4,7 @@
 #include <memory>
 #include "IFileBasedStorageProvider.h"
 #include "BlobStorageProvider.h"
+#include "FileShareProvider.h"
 
 namespace CloudFileServLib
 {
@@ -12,9 +13,12 @@ namespace CloudFileServLib
 		class StorageProviderFactory
 		{
 		public:
-			inline static IFileBasedStorageProvider* GetDefaultProvider(std::string connectionString)
+			inline static IFileBasedStorageProvider* GetDefaultProvider(std::string connectionString, int index)
 			{
-				return new BlobStorageProvider(connectionString);				
+				if (index == 0)
+					return new BlobStorageProvider(connectionString);
+				else
+					return new FileShareProvider(connectionString);
 			}
 		};
 	}
