@@ -160,8 +160,9 @@ int CommandLineProvider::HandleBinaryCommand(std::vector<std::string> params)
 
 std::string CloudFileServLib::BL::CommandLineProvider::ServerPath(std::string path)
 {
-	string::size_type ipos = path.find(rootDir);
+	string tmpRootDir(rootDir);
+	string::size_type ipos = path.find(tmpRootDir);
 	if (ipos != string::npos)
-		path.erase(ipos, rootDir.append("\\").length());
+		path.erase(ipos, tmpRootDir.append("\\").length());
 	return path;
 }

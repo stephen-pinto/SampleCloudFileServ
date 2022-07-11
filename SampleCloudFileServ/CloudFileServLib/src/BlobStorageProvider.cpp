@@ -117,7 +117,7 @@ void BlobStorageProvider::UploadFileFrom(const std::string fileName, const strin
 
 	//Upload the file
 	FileBodyStream fbs(filePath);
-	blobClient.Upload(fbs);
+	blobClient.Upload(fbs);	
 	//NOTE: UploadFrom with filename could have been used but it was done so on purpose for learning
 }
 
