@@ -10,15 +10,27 @@ namespace CloudFileServLib
 {
 	namespace BL
 	{
+		enum FileBasedStorageType
+		{
+			Blobs,
+			FileShares
+		};
+
 		class StorageProviderFactory
 		{
 		public:
-			inline static IFileBasedStorageProvider* GetDefaultProvider(std::string connectionString, int index)
+			inline static IFileBasedStorageProvider* GetDefaultProvider(std::string connectionString, FileBasedStorageType type)
 			{
-				if (index == 0)
-					return new BlobStorageProvider(connectionString);
-				else
+				switch (type)
+				{
+				case CloudFileServLib::BL::FileShares:
+					break;
 					return new FileShareProvider(connectionString);
+				case CloudFileServLib::BL::Blobs:					
+				default:
+					return new BlobStorageProvider(connectionString);
+					break;
+				}					
 			}
 		};
 	}

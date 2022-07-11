@@ -25,9 +25,7 @@ string TempReadConnectionStringFromFile(string fileName)
 CloudFileServLib::BL::CommandLineProvider::CommandLineProvider()
 {
 	auto connStr = TempReadConnectionStringFromFile("ConnectionStrings.txt");
-	//storageProvider = make_unique<BlobStorageProvider>(connStr);
-	storageProvider = unique_ptr<IFileBasedStorageProvider>(StorageProviderFactory::GetDefaultProvider(connStr, 1));
-	storageProvider->OpenContainer("test");
+	storageProvider = unique_ptr<IFileBasedStorageProvider>(StorageProviderFactory::GetDefaultProvider(connStr, FileBasedStorageType::Blobs));
 }
 
 int CommandLineProvider::Run(int argc, char** argv)
@@ -39,11 +37,17 @@ int CommandLineProvider::Run(int argc, char** argv)
 		if (rootDir.empty())
 		{
 			//If not set then first collect a root directory to sync
-			_PRINT("Please provide a ROOT dir to get started:\n");
+			_PRINT("Please provide a ROOT dir to get started:");
 			getline(cin, rootDir);
+
+			_PRINT("\nPlease provide a container name to use:");
+			string containerName;
+			getline(cin, containerName);
+			storageProvider->OpenContainer(containerName);
+
 			//Initialize
 			fileChangeChecker = make_unique<FileChangeChecker>(rootDir);
-			_PRINT("Wait downloading files from server...");
+			_PRINT("\nPlease wait downloading files from server...");
 			//Download all the files from the server
 			storageProvider->DownloadAllFiles(rootDir);
 			//TODO: Launch below operation in another thread
@@ -123,7 +127,7 @@ int CommandLineProvider::HandleCommand(string command)
 	}
 	else if (command == "clear")
 	{
-		system("cls");		
+		system("cls");
 	}
 	else
 	{
