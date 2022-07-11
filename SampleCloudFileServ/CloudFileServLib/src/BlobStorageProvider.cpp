@@ -147,6 +147,9 @@ FileProps CloudFileServLib::BL::BlobStorageProvider::GetFileProps(const string f
 
 void CloudFileServLib::BL::BlobStorageProvider::DownloadAllFiles(const std::string destDir, const std::string srcFolder)
 {
+	if (containerClient.get() == NULL)
+		throw runtime_error("No file share opened");
+
 	vector<string> fileList = GetFileList();
 	for (auto fname : fileList)
 	{

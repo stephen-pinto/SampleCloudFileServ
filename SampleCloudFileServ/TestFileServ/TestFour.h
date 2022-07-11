@@ -13,3 +13,11 @@ void Test1()
 	provider.OpenContainer("test");
 	provider.GetFileList();
 }
+
+void Test2()
+{
+	auto connectionString = ReadConnectionStringFromFile("ConnectionStrings.txt");
+	FileShareProvider provider(connectionString);
+	provider.OpenContainer("test");
+	provider.DownloadAllFiles("D:\\Workspace\\TestSpace\\remote2");
+}

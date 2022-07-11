@@ -59,38 +59,6 @@ vector<string> CloudFileServLib::BL::FileShareProvider::GetFileList()
 
 	list = GetFileListFromDir(rootClient);
 
-	//auto x = rootClient.GetSubdirectoryClient("small/vsmall");
-	//auto url = x.GetUrl();
-
-	//auto resp = rootClient.ListFilesAndDirectories();
-	//auto handles = rootClient.ListHandles();
-	//
-	//while (resp.HasPage())
-	//{
-	//	_PRINT("----------------------------");
-	//	for (auto dir : resp.Directories)
-	//	{
-	//		_PRINT("[DIR] Name: " << dir.Name);
-	//	}
-
-	//	for (auto file : resp.Files)
-	//	{
-	//		_PRINT("[FILE] Name: " << file.Name);
-	//		_PRINT("[FILE] Size: " << file.Details.FileSize);
-	//	}
-	//	_PRINT("----------------------------");
-
-	//	resp.MoveToNextPage();
-	//}
-
-	////auto fclient = rootClient.GetFileClient(resp.Directories[0].Name);
-	//auto dclient = rootClient.GetSubdirectoryClient(resp.Directories[0].Name);
-
-	for (auto item : list)
-	{
-		_PRINT("[FILE] Name: " << item);
-	}
-
 	return list;
 }
 
@@ -98,6 +66,23 @@ void FileShareProvider::DownloadFileTo(const string fileName, string destDir)
 {
 	if (fileShareClient.get() == NULL)
 		throw runtime_error("No container opened");
+
+	auto fileClient = fileShareClient->GetRootDirectoryClient().GetFileClient(fileName);
+	auto props = fileClient.GetProperties().Value;
+
+	//Replace any path discrepences before writing to drive
+	string fullFileName(destDir + "\\" + fileName);
+	replace(fullFileName.begin(), fullFileName.end(), '/', '\\');
+	path fPath(fullFileName);
+
+	//Create folder structure if not exists before writing to file
+	if (!exists(fPath.parent_path()))
+	{
+		int res = _mkdir(fPath.parent_path().string().c_str());
+	}
+
+	//Write to the given path
+	fileClient.DownloadTo(fullFileName);
 }
 
 void FileShareProvider::UploadFileFrom(const string fileName, const string filePath)
@@ -110,6 +95,12 @@ void FileShareProvider::DownloadAllFiles(const string destDir, const string srcF
 {
 	if (fileShareClient.get() == NULL)
 		throw runtime_error("No container opened");
+
+	vector<string> fileList = GetFileList();
+	for (auto fname : fileList)
+	{
+		DownloadFileTo(fname, destDir);
+	}
 }
 
 FileProps FileShareProvider::GetFileProps(const string fileName)
