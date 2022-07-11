@@ -150,7 +150,7 @@
     <ClInclude Include="include\CommandLineProvider.h" />
     <ClInclude Include="include\Common.h" />
     <ClInclude Include="include\FileProps.h" />
-    <ClInclude Include="include\FileStorageProvider.h" />
+    <ClInclude Include="include\FileShareProvider.h" />
     <ClInclude Include="include\FileStoreStateInfo.h" />
     <ClInclude Include="include\ParallelFileWriter.h" />
     <ClInclude Include="include\IFileBasedStorageProvider.h" />
@@ -165,6 +165,7 @@
     <ClInclude Include="include\ListBlobs.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\FileShareProvider.cpp" />
     <ClCompile Include="src\FileChangeChecker.cpp" />
     <ClCompile Include="src\CryptoHelper.cpp" />
     <ClCompile Include="src\FileChunkerState.cpp" />

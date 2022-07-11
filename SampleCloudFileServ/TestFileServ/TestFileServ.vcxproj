@@ -141,6 +141,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TestFour.h" />
     <ClInclude Include="TestOne.h" />
     <ClInclude Include="TestThree.h" />
     <ClInclude Include="TestTwo.h" />

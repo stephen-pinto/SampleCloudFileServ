@@ -4,5 +4,6 @@
 
 class IPrintable
 {
+public:
 	virtual std::string ToString() = 0;
 };

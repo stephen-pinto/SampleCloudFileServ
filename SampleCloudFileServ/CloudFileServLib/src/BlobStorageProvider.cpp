@@ -6,13 +6,13 @@
 #include <boost/filesystem/directory.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <direct.h>
-#include <thread>
 
 using namespace Azure::Storage::Blobs::Models;
 using namespace Azure::Core::IO;
 using namespace CloudFileServLib::BL;
 using namespace std;
 using namespace boost::filesystem;
+using namespace Azure::Storage::Blobs;
 
 BlobStorageProvider::BlobStorageProvider(const string connStr) : connectionString(connStr)
 {

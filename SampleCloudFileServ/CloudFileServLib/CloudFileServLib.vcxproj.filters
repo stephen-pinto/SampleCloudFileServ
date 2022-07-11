@@ -39,9 +39,6 @@
     <ClInclude Include="include\FileProps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\FileStorageProvider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\CommandLineProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -75,6 +72,9 @@
     <ClInclude Include="include\StorageProviderFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\FileShareProvider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CloudFileServLib.cpp">
@@ -102,6 +102,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\FileChangeChecker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FileShareProvider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
