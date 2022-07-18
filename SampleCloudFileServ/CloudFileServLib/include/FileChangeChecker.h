@@ -20,7 +20,7 @@ namespace CloudFileServLib
 			std::vector<ReadOnlyFileProps> GetSyncdFiles();
 
 		private:
-			const string root;
+			const std::string root;
 			FileStoreStateInfo fileStoreState;
 			CryptoHelper cryptoHelper;
 		};

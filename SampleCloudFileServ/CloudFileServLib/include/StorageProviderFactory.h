@@ -26,11 +26,11 @@ namespace CloudFileServLib
 				case CloudFileServLib::BL::FileShares:
 					break;
 					return new FileShareProvider(connectionString);
-				case CloudFileServLib::BL::Blobs:					
+				case CloudFileServLib::BL::Blobs:
 				default:
 					return new BlobStorageProvider(connectionString);
 					break;
-				}					
+				}
 			}
 		};
 	}

@@ -2,6 +2,7 @@
 #include "../include/FileChunker.h"
 
 using namespace CloudFileServLib::BL;
+using namespace std;
 
 FileChunker::FileChunker(const file_size_t chunk_size) : chunkSize(chunk_size)
 {
